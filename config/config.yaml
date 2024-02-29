@@ -1,3 +1,0 @@
-mongodb:
-  uri: "mongodb+srv://admin:37053734@massi-css.bbgjmqr.mongodb.net/"
-  database: "WaterQuality"
