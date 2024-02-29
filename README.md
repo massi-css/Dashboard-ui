@@ -1,6 +1,6 @@
-# Dashboard-ui
+# Dashboard-ui  
 
-so basically hna ghdi nktbo notes t3na including git instructions 
+so basically hna ghdi nktbo notes t3na including git instructions  
 
 ### first create ur folder name it what ever inside it dir 2 folders w7d client and the second will be server then adkhol lel client in the terminal and follow the next commands for git setup:  
 
