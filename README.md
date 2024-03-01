@@ -14,11 +14,16 @@ so basically hna ghdi nktbo notes t3na including git instructions
 3- git commit -m "init branch"  
 4- git push -u origin zaki  
 
+### bch tpushi changes dir hka :
+- git add .
+- git commit -m "message t3k"
+- git push origin master
+## congrats ! 
+
 ## project structure  
 
 -[MainCode](main.py) hna main page wla dashboard code en generale  
 
 -[utils](./utils/utils.py) hna ndifiniw function li nkhdmo bihm   
 
-- rah kyn third folder named "config" hna n7oto sensitive infos so lzm ma npushiwehch to the git thats wh its empty 
-
+- rah kyn third folder named "config" hna n7oto sensitive infos so lzm ma npushiwehch to the git thats wh its empty
