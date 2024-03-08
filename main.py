@@ -41,7 +41,7 @@ if st.session_state.authenticated == False:
 elif st.session_state.authenticated == True:
     #navigation menu in the sidebar
     with st.sidebar:
-        page = option_menu("Main menu", options=["Home", "Feedback & Reporting", "Settings", "Alerts","Map","Historical Data","Devices"])
+        page = option_menu("Main menu", options=["Home","Devices" , "Alerts","Map","Historical Data", "Settings","Feedback & Reporting"])
     # Page contents
     if page == "Home":
         st.title(f"Welcome to the {page} page")
