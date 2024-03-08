@@ -1,3 +1,5 @@
+from datetime import datetime
+import time
 import streamlit as st
 from utils.utils import *
 import pandas as pd
@@ -16,9 +18,8 @@ if st.session_state.button_clicked:
     st.session_state.button_clicked = False
     st.experimental_rerun()
 
-#initialize a user account 
+#initialize the collections
 UsersCollection = connect_to_db(uri, database_name, "users")
-create_user(UsersCollection, "admin", "admin","swordartonline39@gmail.com","massi")
 
 #initialize the authentication status
 if 'authenticated' not in st.session_state:
@@ -47,6 +48,20 @@ elif st.session_state.authenticated == True:
         st.title(f"Welcome to the {page} page")
         st.write(f"authenticated: {st.session_state.authenticated}")
         st.button('Logout', key='logout', on_click=logout)
+        latest_temperature = st.empty()
+        df = pd.DataFrame(columns=['createdAt', 'temperature in celsius'])
+        while True:
+            data = getLatestTemperature()
+            dateStr = data.get('createdAt')
+            date = datetime.strptime(dateStr, '%Y-%m-%dT%H:%M:%S.%fZ')
+            timestr = f"{date.hour}:{date.minute}:{date.second}"
+            temperature_in_c = data.get('temperature')[0].get("temperature")
+            df = pd.concat([df, pd.DataFrame([[timestr, temperature_in_c]],columns=['createdAt', 'temperature in celsius'])], ignore_index=True)
+            # latest_temperature.text(f'temperature: {data.get('temperature')[0].get("temperature")} {data.get('temperature')[0].get("temperature")}')
+            # latest_temperature.write(df)
+            latest_temperature.line_chart(df.set_index('createdAt'))
+            time.sleep(10)
+            
     elif page == "Feedback & Reporting":
         st.title(f"this is the {page} page")
     elif page == "Settings":
@@ -59,7 +74,4 @@ elif st.session_state.authenticated == True:
         st.title(f"this is the {page} page")
     elif page == "Devices":
         st.title(f"this is the {page} page")
-
-   
-
 
