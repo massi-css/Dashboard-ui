@@ -5,7 +5,7 @@ from utils.utils import *
 import pandas as pd
 import numpy as np
 from streamlit_option_menu import option_menu
-
+import devices_page 
 
 
 
@@ -42,7 +42,7 @@ if st.session_state.authenticated == False:
 elif st.session_state.authenticated == True:
     #navigation menu in the sidebar
     with st.sidebar:
-        page = option_menu("Main menu", options=["Home", "Feedback & Reporting", "Settings", "Alerts","Map","Historical Data","Devices"])
+        page = option_menu("Main menu", options=["Home","Devices" , "Alerts","Map","Historical Data", "Settings","Feedback & Reporting"])
     # Page contents
     if page == "Home":
         st.title(f"Welcome to the {page} page")
@@ -73,5 +73,5 @@ elif st.session_state.authenticated == True:
     elif page == "Historical Data":
         st.title(f"this is the {page} page")
     elif page == "Devices":
-        st.title(f"this is the {page} page")
+        devices_page.show()
 
