@@ -3,7 +3,7 @@ from utils.utils import *
 import pandas as pd
 import numpy as np
 from streamlit_option_menu import option_menu
-
+import devices_page 
 
 
 
@@ -58,7 +58,7 @@ elif st.session_state.authenticated == True:
     elif page == "Historical Data":
         st.title(f"this is the {page} page")
     elif page == "Devices":
-        st.title(f"this is the {page} page")
+        devices_page.show()
 
    
 
