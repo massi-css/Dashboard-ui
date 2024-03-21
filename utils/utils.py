@@ -2,6 +2,8 @@ from pymongo import MongoClient
 import streamlit as st
 import yaml 
 from yaml.loader import SafeLoader
+import requests
+from json import JSONDecodeError
 
 
 
@@ -13,9 +15,6 @@ with open('config/config.yaml') as file:
 # retieve the uri, database name from the config file
 uri = config['mongodb']['uri']
 database_name = config['mongodb']['database']
-
-
-
 
 
 
@@ -65,4 +64,14 @@ def authenticate_user(collection, username, password):
 
 def logout():
     st.session_state.authenticated = set_authentication_status(False)
-    st.session_state.button_clicked = True
+    st.rerun()
+
+
+def getLatestTemperature():
+    response = requests.get('http://localhost:5000/data/temperature/latest')
+    try:
+        data = response.json()
+        return data
+    except JSONDecodeError:
+        print("Empty response received from the server")
+        return None
