@@ -1,18 +1,23 @@
 import streamlit as st
-def show():
+import pages.single.single_device as single_device 
+import pages.login.login_page as login_page
+from utils.utils import *
+
+# configure the page
+st.set_page_config(page_title="IOT Dashboard", layout="wide",initial_sidebar_state='expanded')
+
+#initialize the authentication status
+if 'authenticated' not in st.session_state:
+    st.session_state.authenticated = get_authentication_status()
+
+if st.session_state.authenticated == False:
+    login_page.show()
+elif st.session_state.authenticated == True:
+
     # Initialize device_num
     if "device_num" not in st.session_state:
         st.session_state["device_num"] = -1
 
-    # Dasboard of each device
-    def deviceDashboard(index):
-        title = "Device "+ str(index + 1)+" dashboard"
-        st.title(title)
-        if st.button("back"):
-            st.session_state["device_num"] = -1
-            
-            
-            
     # No device selected show main page else show the dasboard of each device
     if st.session_state.get("device_num") == -1:  
         st.title("Devices")
@@ -33,7 +38,6 @@ def show():
         for i, device in enumerate(devices):
             col_index = i % num_columns
             container = columns[col_index].container()
-            
             # Write device information to the container
             container.title(device['Name'])
             container.write(f"Location: {device['Location']}")
@@ -42,11 +46,10 @@ def show():
             button_key = f"see_more_button_{device['Name']}" #giving it a speacial key
             if container.button("See dashboard", key=button_key):
                 st.session_state["device_num"] = i
+                st.rerun()
 
     else:
-        deviceDashboard(st.session_state["device_num"])
-
-
+        single_device.deviceDashboard(st.session_state["device_num"])
 
 
     #CSS
@@ -59,3 +62,5 @@ def show():
             """,
             unsafe_allow_html=True
         )
+
+

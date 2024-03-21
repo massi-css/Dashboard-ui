@@ -64,7 +64,7 @@ def authenticate_user(collection, username, password):
 
 def logout():
     st.session_state.authenticated = set_authentication_status(False)
-    st.session_state.button_clicked = True
+    st.rerun()
 
 
 def getLatestTemperature():
