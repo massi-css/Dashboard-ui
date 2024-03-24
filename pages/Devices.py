@@ -1,7 +1,7 @@
 import streamlit as st
 import pages.single.single_device as single_device 
-import pages.login.login_page as login_page
 from utils.utils import *
+from widgets import sidebar
 
 # configure the page
 st.set_page_config(page_title="IOT Dashboard", layout="wide",initial_sidebar_state='expanded')
@@ -11,15 +11,26 @@ if 'authenticated' not in st.session_state:
     st.session_state.authenticated = get_authentication_status()
 
 if st.session_state.authenticated == False:
-    login_page.show()
+    st.switch_page("pages/login_page.py")
 elif st.session_state.authenticated == True:
-
+    # the sidebar
+    sidebar()
     # Initialize device_num
     if "device_num" not in st.session_state:
         st.session_state["device_num"] = -1
 
     # No device selected show main page else show the dasboard of each device
     if st.session_state.get("device_num") == -1:  
+        #CSS
+        with open("devices_page_Style.css") as f:
+            st.markdown(
+                f"""
+                <style>
+                    {f.read()}
+                </style>
+                """,
+                unsafe_allow_html=True
+            )
         st.title("Devices")
 
         num_columns = 3
@@ -27,11 +38,11 @@ elif st.session_state.authenticated == True:
 
         # Data
         devices = [
-            {'Name': 'Device 1', 'Location': 'Telemcen'},
-            {'Name': 'Device 2', 'Location': 'Blida'},
-            {'Name': 'Device 3', 'Location': 'Algiers'},
-            {'Name': 'Device 4', 'Location': 'Oran'},
-            {'Name': 'Device 5', 'Location': 'Medea'}
+            {'Name': 'Device 1', 'Location': 'blida', 'Status': 'Active','Longitude': 36.531513, 'Latitude': 2.967012},
+            {'Name': 'Device 2', 'Location': 'alger', 'Status': 'Inactive','Longitude': 36.752887, 'Latitude': 3.042048},
+            {'Name': 'Device 3', 'Location': 'oran', 'Status': 'Active','Longitude': 35.691111, 'Latitude': -0.641667},
+            {'Name': 'Device 4', 'Location': 'constantine', 'Status': 'Active','Longitude': 36.365, 'Latitude': 6.614722},
+            {'Name': 'Device 5', 'Location': 'annaba', 'Status': 'Inactive','Longitude': 36.9, 'Latitude': 7.767}
         ]
 
         # Iterate over devices
@@ -52,15 +63,6 @@ elif st.session_state.authenticated == True:
         single_device.deviceDashboard(st.session_state["device_num"])
 
 
-    #CSS
-    with open("devices_page_Style.css") as f:
-        st.markdown(
-            f"""
-            <style>
-                {f.read()}
-            </style>
-            """,
-            unsafe_allow_html=True
-        )
+
 
 

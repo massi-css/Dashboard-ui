@@ -1,0 +1,199 @@
+/* devices stype in the home page */
+#root
+  > div:nth-child(1)
+  > div.withScreencast
+  > div
+  > div
+  > div
+  > section.main.st-emotion-cache-uf99v8.ea3mdgi8
+  > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi5
+  > div
+  > div
+  > div
+  > div.st-emotion-cache-0.e1f1d6gn0
+  > div
+  > div
+  > div:nth-child(1)
+  > div.st-emotion-cache-115gedg.e1f1d6gn3
+  > div
+  > div
+  > div
+  > div.st-emotion-cache-ocqkz7.e1f1d6gn5
+  > div {
+  background-color: black;
+  border-radius: 10px;
+  padding: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 2px;
+  border: transparent solid 2px;
+  color: gray;
+}
+
+/* hover effect of the devices card */
+#root
+  > div:nth-child(1)
+  > div.withScreencast
+  > div
+  > div
+  > div
+  > section.main.st-emotion-cache-uf99v8.ea3mdgi8
+  > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi5
+  > div
+  > div
+  > div
+  > div.st-emotion-cache-0.e1f1d6gn0
+  > div
+  > div
+  > div:nth-child(1)
+  > div.st-emotion-cache-115gedg.e1f1d6gn3
+  > div
+  > div
+  > div
+  > div.st-emotion-cache-ocqkz7.e1f1d6gn5
+  > div:hover {
+  background-color: black;
+  cursor: pointer;
+  border: #9ad8e1 solid 2px;
+  transition: all 0.5s;
+}
+
+/*notifications blocks  */
+#root
+  > div:nth-child(1)
+  > div.withScreencast
+  > div
+  > div
+  > div
+  > section.main.st-emotion-cache-uf99v8.ea3mdgi8
+  > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi5
+  > div
+  > div
+  > div
+  > div.st-emotion-cache-0.e1f1d6gn0
+  > div
+  > div
+  > div:nth-child(1)
+  > div.st-emotion-cache-1r6slb0.e1f1d6gn3
+  > div
+  > div
+  > div
+  > div.st-emotion-cache-0.e1f1d6gn0
+  > div
+  > div
+  > div {
+  background-color: black;
+  border-radius: 10px;
+  padding-left: 5%;
+  color: gray;
+  height: fit-content;
+  margin-bottom: 10px;
+  padding: 5%;
+  border-left: transparent solid 2px;
+}
+
+/* hover effect over notifications blocks */
+#root
+  > div:nth-child(1)
+  > div.withScreencast
+  > div
+  > div
+  > div
+  > section.main.st-emotion-cache-uf99v8.ea3mdgi8
+  > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi5
+  > div
+  > div
+  > div
+  > div.st-emotion-cache-0.e1f1d6gn0
+  > div
+  > div
+  > div:nth-child(1)
+  > div.st-emotion-cache-1r6slb0.e1f1d6gn3
+  > div
+  > div
+  > div
+  > div.st-emotion-cache-0.e1f1d6gn0
+  > div
+  > div
+  > div:hover {
+  border-left: #9ad8e1 solid 2px;
+  transition: all 0.5s;
+  cursor: default;
+}
+
+/* notifications column */
+#root
+  > div:nth-child(1)
+  > div.withScreencast
+  > div
+  > div
+  > div
+  > section.main.st-emotion-cache-uf99v8.ea3mdgi8
+  > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi5
+  > div
+  > div
+  > div
+  > div.st-emotion-cache-0.e1f1d6gn0
+  > div
+  > div
+  > div:nth-child(1)
+  > div.st-emotion-cache-1r6slb0.e1f1d6gn3 {
+  /* border-left: gray solid 2px; */
+  /* padding-left: 5%; */
+  padding: 2%;
+  max-height: 330px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: #262730;
+  border-radius: 10px;
+  border-color: transparent;
+  margin-top: -20px;
+}
+
+/* devices cards column */
+#root
+  > div:nth-child(1)
+  > div.withScreencast
+  > div
+  > div
+  > div
+  > section.main.st-emotion-cache-uf99v8.ea3mdgi8
+  > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi5
+  > div
+  > div
+  > div
+  > div.st-emotion-cache-0.e1f1d6gn0
+  > div
+  > div
+  > div:nth-child(1)
+  > div.st-emotion-cache-115gedg.e1f1d6gn3 {
+  padding-right: 2%;
+}
+
+/* map container style */
+#root
+  > div:nth-child(1)
+  > div.withScreencast
+  > div
+  > div
+  > div
+  > section.main.st-emotion-cache-uf99v8.ea3mdgi8
+  > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi5
+  > div
+  > div
+  > div
+  > div.st-emotion-cache-0.e1f1d6gn0
+  > div
+  > div
+  > div:nth-child(2)
+  > div.st-emotion-cache-115gedg.e1f1d6gn3
+  > div
+  > div
+  > div
+  > div:nth-child(3) {
+  padding: unset;
+  border-radius: 10px;
+  overflow: hidden;
+}
