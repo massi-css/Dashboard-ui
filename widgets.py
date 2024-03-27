@@ -13,7 +13,7 @@ def sidebar():
         st.markdown("<hr/>", unsafe_allow_html=True)
         st.page_link("Home.py", label="Home", icon="🏠")
         st.page_link("pages/Devices.py", label="Devices", icon="📱")
-        st.page_link("pages/Alerts.py", label="Alerts", icon="📧")
+        st.page_link("pages/Notifications.py", label="Notifications", icon="📧")
         st.page_link("pages/Historical_Data.py", label="Historical Data", icon="📊")
         st.page_link("pages/Map.py", label="Map", icon="🗺️")
         st.page_link("pages/Settings.py", label="Settings", icon="⚙️")

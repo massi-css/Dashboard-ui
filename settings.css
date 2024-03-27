@@ -1,0 +1,46 @@
+#root
+  > div:nth-child(1)
+  > div.withScreencast
+  > div
+  > div
+  > div
+  > section.main.st-emotion-cache-uf99v8.ea3mdgi8
+  > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi5
+  > div
+  > div
+  > div
+  > div:nth-child(n)
+  > div
+  > button {
+  padding-left: 10px;
+  text-align: left;
+  border: 0;
+  border-left: #9ad8e1 solid 2px;
+  background-color: black;
+  border-radius: 10px;
+  color: gray;
+  height: 50px;
+  width: 300px;
+  margin-bottom: 10px;
+  /* padding: 10px; */
+}
+
+#root
+  > div:nth-child(1)
+  > div.withScreencast
+  > div
+  > div
+  > div
+  > section.main.st-emotion-cache-uf99v8.ea3mdgi8
+  > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi5
+  > div
+  > div
+  > div
+  > div:nth-child(n)
+  > div
+  > button
+  :hover {
+  /* transition: all 0.5s;
+  cursor: default; */
+  color: white;
+}

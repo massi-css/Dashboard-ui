@@ -8,7 +8,7 @@ UsersCollection = connect_to_db(uri, database_name, "users")
 st.set_page_config(page_title="IOT Dashboard", layout="centered")
 
 # login form
-st.title('Login page')
+st.title('Login')
 with st.form(key='my_form'):
     username = st.text_input('Username')
     password = st.text_input('Password', type='password')
