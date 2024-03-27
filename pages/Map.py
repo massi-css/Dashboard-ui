@@ -25,7 +25,7 @@ elif st.session_state.authenticated == True:
             {'Name': 'Device 5', 'Location': 'annaba', 'Status': 'Inactive','Longitude': 36.9, 'Latitude': 7.767}
         ]
     gdf = pd.DataFrame(devices)
-    st.title("Map Page")
+    st.title("Map")
     st.markdown("<span style='height: 20px;'></span>", unsafe_allow_html=True)
     container = st.container()
     with container:

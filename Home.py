@@ -28,8 +28,8 @@ elif st.session_state.authenticated == True:
             </style>
             """,
             unsafe_allow_html=True
-        )
-    st.title("Home Page")
+        ) 
+    st.title("Welcome")
     st.markdown("<span style='height: 20px;'></span>", unsafe_allow_html=True)
     container = st.container()
 
