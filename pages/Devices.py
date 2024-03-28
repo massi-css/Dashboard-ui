@@ -32,10 +32,9 @@ elif st.session_state.authenticated == True:
                 unsafe_allow_html=True
             )
         st.title("Devices")
-
+        # Columns
         num_columns = 3
         columns = st.columns(num_columns)
-
         # Data
         devices = [
             {'Name': 'Device 1', 'Location': 'blida', 'Status': 'Active','Longitude': 36.531513, 'Latitude': 2.967012},
@@ -54,11 +53,20 @@ elif st.session_state.authenticated == True:
             container.write(f"Location: {device['Location']}")
 
             # Button to show dashboard
-            button_key = f"see_more_button_{device['Name']}" #giving it a speacial key
+            #giving it a speacial key to identify it
+            button_key = f"see_more_button_{device['Name']}" 
+            # add new device card
             if container.button("See dashboard", key=button_key):
                 st.session_state["device_num"] = i
                 st.rerun()
-
+        # Add new device card
+        add_col_index = (i + 1) % num_columns  
+        add_container = columns[add_col_index].container()
+        st.markdown("<div id='add_device'>", unsafe_allow_html=True)
+        add_container.title("add new device")
+        if add_container.button("add"):
+            st.switch_page("pages/NewDevice.py")
+        st.markdown("</div>", unsafe_allow_html=True)
     else:
         single_device.deviceDashboard(st.session_state["device_num"])
 

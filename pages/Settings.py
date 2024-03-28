@@ -14,14 +14,17 @@ if st.session_state.authenticated == False:
 elif st.session_state.authenticated == True:
     # the sidebar
     sidebar()
-    
+    # settings_features.Feature_Page(st.session_state["selected_Feature"])
     # Initialize selected_Feature
     if "selected_Feature" not in st.session_state:
-        st.session_state["selected_Feature"] = "Settings"
-
-    # No button selected show main page else show the page of each feature
-    if st.session_state.get("selected_Feature") == "Settings":  
-        #CSS
+        st.session_state["selected_Feature"] = "password_username"
+    # the main page
+    maincontainer = st.container()
+    maincontainer.title("Settings")
+    st.markdown("<span style='height: 20px;'></span>", unsafe_allow_html=True)
+    features, displayfeature = maincontainer.columns([2, 4])
+    displayContainer = displayfeature.empty()
+    with features:
         with open("settings.css") as f:
             st.markdown(
                 f"""
@@ -31,31 +34,17 @@ elif st.session_state.authenticated == True:
                 """,
                 unsafe_allow_html=True
             )
-        st.title("Settings")
-
-        num_columns = 3
-        columns = st.columns(num_columns)
-
-
-        if st.button("Edit password and username"):
+        if st.button("Edit Password and username", key="Editpass"):
             st.session_state["selected_Feature"] = "password_username"
             st.rerun()
-            
-        if st.button("Data upadtes frequency"):
+        if st.button("data updates frequency", key="Editfrequency"):
             st.session_state["selected_Feature"] = "data_upadtes"
             st.rerun()
-            
-        if st.button("Help"):
+        if st.button("help", key="help"):
             st.session_state["selected_Feature"] = "help"
             st.rerun()
-            
-        if st.button("Feedback & Reporting"):
+        if st.button("feedback && reporting", key="feedback"):
             st.session_state["selected_Feature"] = "feedback_reporting"
-            st.rerun()        
-    else:
+            st.rerun()
+    with displayContainer:
         settings_features.Feature_Page(st.session_state["selected_Feature"])
-
-
-
-        
-        

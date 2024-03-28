@@ -1,12 +1,6 @@
 /* Devices Cards */
 
-  div.st-emotion-cache-ocqkz7.e1f1d6gn5
-  > div
-  > div
-  > div
-  > div
-  > div {
-    
+div.st-emotion-cache-ocqkz7.e1f1d6gn5 > div > div > div > div > div {
   color: black;
   background-color: #ffffff;
   border: 1px solid #cccccc;
@@ -17,7 +11,7 @@
   box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
 }
 /* Device Name */
-  div.st-emotion-cache-ocqkz7.e1f1d6gn5
+div.st-emotion-cache-ocqkz7.e1f1d6gn5
   > div
   > div
   > div
@@ -115,3 +109,6 @@
   text-align: center;
   align-items: center;
 }
+
+
+
