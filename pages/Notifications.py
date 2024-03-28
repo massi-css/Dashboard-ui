@@ -25,11 +25,15 @@ elif st.session_state.authenticated == True:
         ) 
     st.title("Notifications")
     
-    notificationsData= ["Notification1", "Notification2", "Notification3", "Notification4"]
+    # notificationsData= ["Notification1", "Notification2", "Notification3", "Notification4"]
+    notificationsData = get_notifications()
       
     notificationContainer = st.container()
-    # st.write("List of notifications")
-    with notificationContainer:
-        for notification in notificationsData:
-            st.write(notification)
+    if isinstance(notificationsData,list):
+        # st.write("List of notifications")
+        with notificationContainer:
+            for notification in notificationsData:
+                st.write(notification["message"])
+    else:
+        st.write("No notifications available")
         

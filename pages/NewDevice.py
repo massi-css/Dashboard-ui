@@ -26,14 +26,18 @@ elif st.session_state.authenticated == True:
         latitude = st.number_input("Latitude")
         submit = st.form_submit_button("Add device")
         if submit:
-            st.success("Device added successfully")
             data={
-                'Name': device_name,
-                'Location': location,
-                'Status': status,
-                'Longitude': longitude,
-                'Latitude': latitude
+                'deviceName': device_name,
+                'location': location,
+                'status': status,
+                'longitude': longitude,
+                'latitude': latitude
             }
-            st.write(data)
+            device = create_device(data)
+            if device:
+                st.success("Device added successfully")
+                st.switch_page("pages/Devices.py")
+            else:
+                st.error("Error adding the device")
             st.session_state["device_num"] = -1
             # st.rerun()

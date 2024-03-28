@@ -5,13 +5,15 @@ from datetime import datetime
 import time
 import random
 import pandas as pd
+from utils.utils import *
 
 
 
 # Dasboard of each device
-def deviceDashboard(index):
+def deviceDashboard(deviceId):
+    device = get_device_by_id(deviceId)
     df = pd.DataFrame(columns=['createdAt','ph', 'temperature','conductivity','oxigen','turbidity'])
-    title = "Device "+ str(index + 1)+" dashboard"
+    title = f"{device['deviceName']} dashboard"
     if st.button("back"):
         st.session_state["device_num"] = -1
         st.rerun()

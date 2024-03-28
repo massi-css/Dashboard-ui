@@ -15,6 +15,7 @@ with open('config/config.yaml') as file:
 # retieve the uri, database name from the config file
 uri = config['mongodb']['uri']
 database_name = config['mongodb']['database']
+server_uri = config['server']['uri']
 
 
 
@@ -66,12 +67,102 @@ def logout():
     st.session_state.authenticated = set_authentication_status(False)
     st.rerun()
 
-
-def getLatestTemperature():
-    response = requests.get('http://localhost:5000/data/temperature/latest')
+# get all devices
+def get_devices():
     try:
+        response = requests.get(f"{server_uri}/devices")
+        devices = response.json()
+        return devices
+    except JSONDecodeError:
+        print("Empty response received from the server")
+        return []
+
+# get device by id 
+def get_device_by_id(device_id):
+    try:
+        response = requests.get(f"{server_uri}/devices/{device_id}")
+        device = response.json()
+        return device
+    except JSONDecodeError:
+        print("Empty response received from the server")
+        return {}
+
+# create a device
+def create_device(device):
+    try:
+        response = requests.post(f"{server_uri}/devices", json=device)
+        device = response.json()
+        return device
+    except JSONDecodeError:
+        print("Empty response received from the server")
+        return {}
+
+# update a device
+def update_device(device_id, device):
+    try:
+        response = requests.put(f"{server_uri}/devices/{device_id}", json=device)
+        device = response.json()
+        return device
+    except JSONDecodeError:
+        print("Empty response received from the server")
+        return {}
+
+# delete a device
+def delete_device(device_id):
+    try:
+        response = requests.delete(f"{server_uri}/devices/{device_id}")
+        device = response.json()
+        return device
+    except JSONDecodeError:
+        print("Empty response received from the server")
+        return {}
+
+# delete all devices 
+def delete_all_devices():
+    try:
+        response = requests.delete(f"{server_uri}/devices")
+        devices = response.json()
+        return devices
+    except JSONDecodeError:
+        print("Empty response received from the server")
+        return []
+    
+# get device data
+def get_device_data(device_id):
+    try:
+        response = requests.get(f"{server_uri}/data/{device_id}")
         data = response.json()
         return data
     except JSONDecodeError:
         print("Empty response received from the server")
-        return None
+        return []
+
+# get latest device data
+def get_latest_device_data(device_id):
+    try:
+        response = requests.get(f"{server_uri}/devices/data/latest/{device_id}")
+        data = response.json()
+        return data
+    except JSONDecodeError:
+        print("Empty response received from the server")
+        return []
+
+# reset device data
+def reset_device_data(device_id):
+    try:
+        response = requests.delete(f"{server_uri}/devices/data/{device_id}")
+        data = response.json()
+        return data
+    except JSONDecodeError:
+        print("Empty response received from the server")
+        return []
+    
+# get all notifications
+def get_notifications():
+    try:
+        response = requests.get(f"{server_uri}/notifications")
+        notifications = response.json()
+        return notifications
+    except JSONDecodeError:
+        print("Empty response received from the server")
+        return []

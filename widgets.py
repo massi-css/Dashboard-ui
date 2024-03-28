@@ -60,13 +60,13 @@ def plot_circle(names, values):
 def init_map(location = (36.531513, 2.967012), zoom=15, map_type='OpenStreetMap', gdf=None):
     if gdf is not None:
         # trying to fit the map to the center of all markers
-        mean_lat = gdf['Latitude'].mean()
-        mean_lon = gdf['Longitude'].mean()
+        mean_lat = gdf['latitude'].mean()
+        mean_lon = gdf['longitude'].mean()
         location = [mean_lat, mean_lon]
         m = folium.Map(location=location, zoom_start=zoom, tiles=map_type)
         # trying to fit the zoom to all markers in the map
-        sw = gdf[['Latitude', 'Longitude']].min().values.tolist()
-        ne = gdf[['Latitude', 'Longitude']].max().values.tolist()
+        sw = gdf[['latitude', 'longitude']].min().values.tolist()
+        ne = gdf[['latitude', 'longitude']].max().values.tolist()
         m.fit_bounds([sw, ne])
         return m
     return folium.Map(location=location, zoom_start=zoom, tiles=map_type)
@@ -74,5 +74,5 @@ def init_map(location = (36.531513, 2.967012), zoom=15, map_type='OpenStreetMap'
 # function to plot a map with markers
 def add_points_to_map(m, gdf):
     for i, row in gdf.iterrows():
-        folium.Marker(location=[row['Latitude'], row['Longitude']], popup=row['Location']).add_to(m)
+        folium.Marker(location=[row['latitude'], row['longitude']], popup=row['location']).add_to(m)
     return m

@@ -33,15 +33,17 @@ elif st.session_state.authenticated == True:
     st.markdown("<span style='height: 20px;'></span>", unsafe_allow_html=True)
     container = st.container()
 
-    notificationsData= ["notification1", "notification2", "notification3", "notification4"]
+    # notificationsData= ["notification1", "notification2", "notification3", "notification4"]
+    notificationsData = get_notifications()
 
-    devicesData = [
-            {'Name': 'Device 1', 'Location': 'blida', 'Status': 'Active','Longitude': 36.531513, 'Latitude': 2.967012},
-            {'Name': 'Device 2', 'Location': 'alger', 'Status': 'Inactive','Longitude': 36.752887, 'Latitude': 3.042048},
-            {'Name': 'Device 3', 'Location': 'oran', 'Status': 'Active','Longitude': 35.691111, 'Latitude': -0.641667},
-            {'Name': 'Device 4', 'Location': 'constantine', 'Status': 'Active','Longitude': 36.365, 'Latitude': 6.614722},
-            {'Name': 'Device 5', 'Location': 'annaba', 'Status': 'Inactive','Longitude': 36.9, 'Latitude': 7.767}
-        ]
+    # devicesData = [
+    #         {'deviceName': 'Device 1', 'location': 'blida', 'status': 'Active','longitude': 36.531513, 'latitude': 2.967012},
+    #         {'deviceName': 'Device 2', 'location': 'alger', 'status': 'Inactive','longitude': 36.752887, 'latitude': 3.042048},
+    #         {'deviceName': 'Device 3', 'location': 'oran', 'status': 'Active','longitude': 35.691111, 'latitude': -0.641667},
+    #         {'deviceName': 'Device 4', 'location': 'constantine', 'status': 'Active','longitude': 36.365, 'latitude': 6.614722},
+    #         {'deviceName': 'Device 5', 'location': 'annaba', 'status': 'Inactive','longitude': 36.9, 'latitude': 7.767}
+    #     ]
+    devicesData = get_devices()
     gdf = pd.DataFrame(devicesData)
 
     with container:
@@ -50,17 +52,16 @@ elif st.session_state.authenticated == True:
         with devices:
             st.subheader("Devices")
             st.markdown("<span style='height: 10px;'></span>", unsafe_allow_html=True)
-            # st.write("List of devices")
-            # Create 3 columns
-            cols = st.columns(3)
+            # Create 3 columns for maximum 3 devices
+            cols = st.columns(min(3, gdf.shape[0]))
             # Loop through the data
             for i, item in gdf.head(3).iterrows():
                 # Select the column
                 col = cols[i % 3]
                 # Create the card
-                col.header(item['Name'])
-                col.write(f"Status: {item['Status']}")
-                col.write(f"Location: {item['Location']}")
+                col.header(item['deviceName'])
+                col.write(f"Status: {item['status']}")
+                col.write(f"Location: {item['location']}")
             
         with notifications:
             st.subheader("Notifications")
@@ -69,7 +70,7 @@ elif st.session_state.authenticated == True:
             # st.write("List of notifications")
             with notificationContainer:
                 for notification in notificationsData:
-                    st.write(notification)
+                    st.write(notification.get('message'))
         with chat:
             st.subheader("Chat")
             st.markdown("<span style='height: 10px;'></span>", unsafe_allow_html=True)
