@@ -53,7 +53,11 @@ elif st.session_state.authenticated == True:
             st.subheader("Devices")
             st.markdown("<span style='height: 10px;'></span>", unsafe_allow_html=True)
             # Create 3 columns for maximum 3 devices
-            cols = st.columns(min(3, gdf.shape[0]))
+            if(gdf.shape[0] > 0):
+                cols = st.columns(min(3, gdf.shape[0]))
+            else:
+                cols = st.columns(1)
+                cols[0].subheader("No devices found")
             # Loop through the data
             for i, item in gdf.head(3).iterrows():
                 # Select the column
@@ -80,9 +84,13 @@ elif st.session_state.authenticated == True:
         with Map:
             st.subheader("Map")
             st.markdown("<span style='height: 10px;'></span>", unsafe_allow_html=True)
-            m = init_map(gdf=gdf)
-            m = add_points_to_map(m, gdf)
-            # Convert the map to an HTML string
-            m_html = m._repr_html_()
-            # Display the map
-            components.html(m_html, height=420)
+            if gdf.shape[0] > 0:
+                m = init_map(gdf=gdf)
+                m = add_points_to_map(m, gdf)
+                # Convert the map to an HTML string
+                m_html = m._repr_html_()
+                # Display the map
+                components.html(m_html, height=420)
+            else:
+                cols = st.columns(1)
+                cols[0].subheader("add at least one device to see the map")

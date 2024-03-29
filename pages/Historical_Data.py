@@ -20,6 +20,9 @@ elif st.session_state.authenticated == True:
 
     st.title("Historical Data")
     st.markdown("<span style='height: 20px;'></span>", unsafe_allow_html=True)
+    if(len(devices) == 0):
+        st.write("No devices found")
+        st.stop()
     for device in devices:
         with st.expander(f"Device: {device['deviceName']}"):
             deviceData = get_device_data(device['_id'])

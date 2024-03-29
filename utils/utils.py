@@ -140,7 +140,7 @@ def get_device_data(device_id):
 # get latest device data
 def get_latest_device_data(device_id):
     try:
-        response = requests.get(f"{server_uri}/devices/data/latest/{device_id}")
+        response = requests.get(f"{server_uri}/data/latest/{device_id}")
         data = response.json()
         return data
     except JSONDecodeError:

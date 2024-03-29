@@ -12,7 +12,7 @@ from utils.utils import *
 # Dasboard of each device
 def deviceDashboard(deviceId):
     device = get_device_by_id(deviceId)
-    df = pd.DataFrame(columns=['createdAt','ph', 'temperature','conductivity','oxigen','turbidity'])
+    # df = pd.DataFrame(columns=['createdAt','ph', 'temperature','conductivity','oxigen','turbidity'])
     title = f"{device['deviceName']} dashboard"
     if st.button("back"):
         st.session_state["device_num"] = -1
@@ -36,7 +36,6 @@ def deviceDashboard(deviceId):
         placeholder4 = col2.empty()
         placeholder3 = col3.empty()
         placeholder5 = col4.empty()
-
         # parameters graphs
         st.markdown("<hr/>", unsafe_allow_html=True)
         st.subheader("more details:")
@@ -49,36 +48,42 @@ def deviceDashboard(deviceId):
         placeholder7 = col2.empty()
 
     while True:
-        temperature_in_c = random.uniform(14, 30)
-        conductivity = random.uniform(0, 100)
-        oxigen = random.uniform(0, 100)
-        turbidity = random.uniform(0, 100)
-        ph = random.uniform(0, 14)
-        date = datetime.now().strftime("%H:%M:%S")
-        df = pd.concat([df, pd.DataFrame([[date,ph, temperature_in_c,conductivity,oxigen,turbidity]],columns=['createdAt','ph', 'temperature','conductivity','oxigen','turbidity'])], ignore_index=True)
+        latest_data = get_latest_device_data(deviceId)
+        # temperature_in_c = latest_data['temperature'][0]['temperature']
+        # conductivity = latest_data['conductivity']
+        # oxigen = latest_data['oxygen']
+        # turbidity = latest_data['turbidity']
+        # ph = latest_data['ph']
+        # dateString= latest_data['createdAt']
+        # date_string = dateString.replace('Z', '')
+        # date_object = datetime.fromisoformat(date_string)
+        # date = date_object.strftime("%H:%M:%S")
+        # df = pd.concat([df, pd.DataFrame([[date,ph, temperature_in_c,conductivity,oxigen,turbidity]],columns=['createdAt','ph', 'temperature','conductivity','oxigen','turbidity'])], ignore_index=True)
+        df = pd.DataFrame(latest_data)
+        print(df)
         with placeholder1:
             st.line_chart(df[['temperature','createdAt']].set_index('createdAt'),color="#0000FF")
         with placeholder2:
             st.line_chart(df[['conductivity','createdAt']].set_index('createdAt'),color="#008000")
         with placeholder3:
-            plot_gauge(temperature_in_c,"blue", "°C","Temperature", 45)
+            plot_gauge(df['temperature'].iloc[0],"blue", "°C","Temperature", 45)
         with placeholder4:
-            plot_gauge(conductivity,"green", "µS/cm","Conductivity", 100)
+            plot_gauge(df['conductivity'].iloc[0],"green", "µS/cm","Conductivity", 100)
         with placeholder5:
-            plot_gauge(oxigen,"red", "mg/L","Oxigen", 100)
+            plot_gauge(df['oxygen'].iloc[0],"red", "mg/L","Oxigen", 100)
         with placeholder6:
-            st.line_chart(df[['oxigen','createdAt']].set_index('createdAt'),color="#FF0000")
+            st.line_chart(df[['oxygen','createdAt']].set_index('createdAt'),color="#FF0000")
         with placeholder7:
             st.line_chart(df[['turbidity','createdAt']].set_index('createdAt'),color="#808080")
         # with placeholder8:
         #     plot_gauge(turbidity,"white", "NTU","Turbidity", 100)
         with placeholder9:
-            plot_gauge(ph,"purple", "pH","pH", 14)
+            plot_gauge(df['ph'].iloc[0],"purple", "pH","pH", 14)
         with placeholder10:
             st.line_chart(df[['ph','createdAt']].set_index('createdAt'),color="#800080")
         with placeholder11:
             st.dataframe(df, height=360)
         with placeholder8:
-            plot_circle(["ph","temperature","conductivity","oxigen","turbidity"],[ph,temperature_in_c,conductivity,oxigen,turbidity])
+            plot_circle(["ph","temperature","conductivity","oxigen","turbidity"],[df['ph'].iloc[0],df['temperature'].iloc[0],df['conductivity'].iloc[0],df['oxygen'].iloc[0],df['turbidity'].iloc[0]])
         time.sleep(10)
         
