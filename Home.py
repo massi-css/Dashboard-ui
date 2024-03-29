@@ -73,8 +73,11 @@ elif st.session_state.authenticated == True:
             notificationContainer = st.container()
             # st.write("List of notifications")
             with notificationContainer:
-                for notification in notificationsData:
-                    st.write(notification.get('message'))
+                if(isinstance(notificationsData, list)):
+                    for notification in notificationsData:
+                        st.write(notification.get('message'))
+                else:
+                    st.write(notificationsData.get('message'))
         with chat:
             st.subheader("Chat")
             st.markdown("<span style='height: 10px;'></span>", unsafe_allow_html=True)
