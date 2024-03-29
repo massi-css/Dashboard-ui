@@ -16,7 +16,7 @@ with open('config/config.yaml') as file:
 uri = config['mongodb']['uri']
 database_name = config['mongodb']['database']
 server_uri = config['server']['uri']
-
+api_key = config['APIKEY']['key']
 
 
 # connect to mongo db

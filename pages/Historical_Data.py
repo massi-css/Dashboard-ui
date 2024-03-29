@@ -1,7 +1,6 @@
 import streamlit as st
 from utils.utils import *
 import pandas as pd
-import numpy as np
 from widgets import sidebar
 
 # configure the page
