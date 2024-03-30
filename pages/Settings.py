@@ -20,11 +20,11 @@ elif st.session_state.authenticated == True:
         st.session_state["selected_Feature"] = "password_username"
     # the main page
     maincontainer = st.container()
-    maincontainer.title("Settings")
-    st.markdown("<span style='height: 20px;'></span>", unsafe_allow_html=True)
     features, displayfeature = maincontainer.columns([2, 4])
-    displayContainer = displayfeature.empty()
+    displayContainer = displayfeature.container()
     with features:
+        st.title("Settings")
+        st.markdown("<span style='height: 20px;'></span>", unsafe_allow_html=True)
         with open("settings.css") as f:
             st.markdown(
                 f"""
@@ -36,6 +36,9 @@ elif st.session_state.authenticated == True:
             )
         if st.button("Edit Password and username", key="Editpass"):
             st.session_state["selected_Feature"] = "password_username"
+            st.rerun()
+        if st.button("notification settings", key="notification"):
+            st.session_state["selected_Feature"] = "notification_settings"
             st.rerun()
         if st.button("data updates frequency", key="Editfrequency"):
             st.session_state["selected_Feature"] = "data_upadtes"

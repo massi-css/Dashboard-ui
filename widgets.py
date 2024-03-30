@@ -13,6 +13,7 @@ def sidebar():
         st.markdown("<hr/>", unsafe_allow_html=True)
         st.page_link("Home.py", label="Home", icon="🏠")
         st.page_link("pages/Devices.py", label="Devices", icon="📱")
+        st.page_link("pages/AiChat.py", label="AI Chat", icon="💬")
         st.page_link("pages/Notifications.py", label="Notifications", icon="📧")
         st.page_link("pages/Historical_Data.py", label="Historical Data", icon="📊")
         st.page_link("pages/Map.py", label="Map", icon="🗺️")
@@ -58,15 +59,20 @@ def plot_circle(names, values):
 # function to plot a map support auto zoom and center if there is markers
 # @st.cache_resource
 def init_map(location = (36.531513, 2.967012), zoom=15, map_type='OpenStreetMap', gdf=None):
+    padding = 0.001
     if gdf is not None:
         # trying to fit the map to the center of all markers
-        mean_lat = gdf['Latitude'].mean()
-        mean_lon = gdf['Longitude'].mean()
+        mean_lat = gdf['latitude'].mean()
+        mean_lon = gdf['longitude'].mean()
         location = [mean_lat, mean_lon]
         m = folium.Map(location=location, zoom_start=zoom, tiles=map_type)
         # trying to fit the zoom to all markers in the map
-        sw = gdf[['Latitude', 'Longitude']].min().values.tolist()
-        ne = gdf[['Latitude', 'Longitude']].max().values.tolist()
+        sw = gdf[['latitude', 'longitude']].min().values.tolist()
+        ne = gdf[['latitude', 'longitude']].max().values.tolist()
+        sw[0] -= padding
+        sw[1] -= padding
+        ne[0] += padding
+        ne[1] += padding
         m.fit_bounds([sw, ne])
         return m
     return folium.Map(location=location, zoom_start=zoom, tiles=map_type)
@@ -74,5 +80,5 @@ def init_map(location = (36.531513, 2.967012), zoom=15, map_type='OpenStreetMap'
 # function to plot a map with markers
 def add_points_to_map(m, gdf):
     for i, row in gdf.iterrows():
-        folium.Marker(location=[row['Latitude'], row['Longitude']], popup=row['Location']).add_to(m)
+        folium.Marker(location=[row['latitude'], row['longitude']], popup=row['deviceName']).add_to(m)
     return m
