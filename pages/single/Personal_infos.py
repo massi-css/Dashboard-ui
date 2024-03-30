@@ -4,6 +4,7 @@ from utils.utils import *
 
 def showPage():
     st.subheader("Edit password and username")
+    st.markdown("<hr/>", unsafe_allow_html=True)
     user = get_user_by_Id()
     st.info("duplicate the old password if you don't want to change it")
     with st.form(key='my_form'):

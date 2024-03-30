@@ -37,6 +37,9 @@ elif st.session_state.authenticated == True:
         if st.button("Edit Password and username", key="Editpass"):
             st.session_state["selected_Feature"] = "password_username"
             st.rerun()
+        if st.button("notification settings", key="notification"):
+            st.session_state["selected_Feature"] = "notification_settings"
+            st.rerun()
         if st.button("data updates frequency", key="Editfrequency"):
             st.session_state["selected_Feature"] = "data_upadtes"
             st.rerun()

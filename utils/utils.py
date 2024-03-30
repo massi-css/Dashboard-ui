@@ -186,6 +186,14 @@ def update_user(user):
     except JSONDecodeError:
         print("Empty response received from the server")
         return {}
+def update_notification(user):
+    try:
+        response = requests.put(f"{server_uri}/users/{user_id}/notifications", json=user)
+        user = response.json()
+        return user
+    except JSONDecodeError:
+        print("Empty response received from the server")
+        return {}
     
 # calculates the water quality index
 def calculate_wqi(ph, turbidity, conductivity, temperature):
