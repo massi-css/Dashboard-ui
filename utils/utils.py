@@ -186,6 +186,43 @@ def update_user(user):
     except JSONDecodeError:
         print("Empty response received from the server")
         return {}
-
+    
+# calculates the water quality index
+def calculate_wqi(ph, turbidity, conductivity, temperature):
+    """
+    Calculate Water Quality Index (WQI) based on specified parameters.
+    
+    Args:
+    ph: pH value of the water sample.
+    turbidity: Turbidity value in NTU (Nephelometric Turbidity Units).
+    conductivity: Conductivity value in μS/cm (microsiemens per centimeter).
+    temperature: Water temperature in Celsius.
+    
+    Returns:
+    Water Quality Index (WQI) value.
+    """
+    
+    # Weightage factors for each parameter
+    ph_weight = 0.25
+    turbidity_weight = 0.25
+    conductivity_weight = 0.25
+    temperature_weight = 0.25
+    
+    # Normalize parameters
+    ph_norm = (ph - 6) / (8.5 - 6) * 100
+    turbidity_norm = (turbidity / 5) * 100  # Assuming maximum acceptable turbidity is 5 NTU
+    conductivity_norm = (conductivity / 1500) * 100  # Assuming maximum acceptable conductivity is 1500 μS/cm
+    temperature_norm = (temperature - 0) / (30 - 0) * 100  # Assuming temperature range from 0 to 30 Celsius
+    
+    # Calculate sub-indices
+    ph_index = ph_norm * ph_weight
+    turbidity_index = turbidity_norm * turbidity_weight
+    conductivity_index = conductivity_norm * conductivity_weight
+    temperature_index = temperature_norm * temperature_weight
+    
+    # Calculate WQI
+    wqi = ph_index + turbidity_index + conductivity_index + temperature_index
+    
+    return wqi
 
     
