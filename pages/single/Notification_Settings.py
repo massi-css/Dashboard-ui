@@ -1,5 +1,6 @@
 from time import sleep
 import streamlit as st
+import re
 from utils.utils import *
 
 def showPage():
@@ -28,6 +29,10 @@ def showPage():
             }
             if email == "" or phoneNumber == "":
                 st.error("Please fill all the fields")
+            elif not re.match(r'^\+213\d{9}$', phoneNumber):
+                st.error("Please enter a valid phone number")
+                sleep(2)
+                st.rerun()
             else:
                 response = update_notification(data)
                 if response['status'] == True:
