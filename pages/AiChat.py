@@ -41,7 +41,7 @@ elif st.session_state.authenticated == True:
     if prompt:
         # display the user input
         with st.chat_message("user"):
-            st.markdown(prompt)
+            st.write(prompt)
         # add the user input to the messages state
         st.session_state.messages.append({'role': 'user', 'content': prompt})
         # respond to the user input

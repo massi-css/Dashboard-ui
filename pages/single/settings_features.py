@@ -4,12 +4,7 @@ import pages.DataUpadtes as DataUpadtes
 import pages.Help as Help
 import pages.Feedback_Reporting as Feedback_Reporting
 
-def Feature_Page(feature):
-    if st.button("back"):
-        st.session_state["selected_Feature"] = "Settings"
-        st.rerun()
-        
-        
+def Feature_Page(feature):   
     if feature == 'password_username':
         Personal_infos.showPage()
     elif feature == "data_upadtes":

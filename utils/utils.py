@@ -17,6 +17,7 @@ uri = config['mongodb']['uri']
 database_name = config['mongodb']['database']
 server_uri = config['server']['uri']
 api_key = config['APIKEY']['key']
+user_id = config['USERID']['id']
 
 
 # connect to mongo db
@@ -166,3 +167,25 @@ def get_notifications():
     except JSONDecodeError:
         print("Empty response received from the server")
         return []
+
+# while we have only one user its not nessesary to have a user_id parameter so defined it as a global variable
+def get_user_by_Id():
+    try:
+        response = requests.get(f"{server_uri}/users/{user_id}")
+        user = response.json()
+        return user
+    except JSONDecodeError:
+        print("Empty response received from the server")
+        return {}
+
+def update_user(user):
+    try:
+        response = requests.put(f"{server_uri}/users/{user_id}", json=user)
+        user = response.json()
+        return user
+    except JSONDecodeError:
+        print("Empty response received from the server")
+        return {}
+
+
+    
