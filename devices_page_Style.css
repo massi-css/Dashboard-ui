@@ -1,7 +1,71 @@
 /* Devices Cards */
 
-div.st-emotion-cache-ocqkz7.e1f1d6gn5 > div > div > div > div > div {
-  color: black;
+#root
+  > div:nth-child(1)
+  > div.withScreencast
+  > div
+  > div
+  > div
+  > section.main.st-emotion-cache-uf99v8.ea3mdgi8
+  > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi5
+  > div
+  > div
+  > div
+  > div.st-emotion-cache-ocqkz7.e1f1d6gn5
+  > div:nth-child(3)
+  > div
+  > div
+  > div
+  > div
+  > div
+  > div
+  > div:nth-child(2)
+  > div
+  > button {
+  color: white;
+}
+#root
+  > div:nth-child(1)
+  > div.withScreencast
+  > div
+  > div
+  > div
+  > section.main.st-emotion-cache-uf99v8.ea3mdgi8
+  > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi5
+  > div
+  > div
+  > div
+  > div.st-emotion-cache-ocqkz7.e1f1d6gn5
+  > div:nth-child(3)
+  > div
+  > div
+  > div
+  > div
+  > div
+  > div
+  > div:nth-child(2)
+  > div
+  > button:hover {
+  color: #39bda7;
+}
+
+#root
+  > div:nth-child(1)
+  > div.withScreencast
+  > div
+  > div
+  > div
+  > section.main.st-emotion-cache-uf99v8.ea3mdgi8
+  > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi5
+  > div
+  > div
+  > div
+  > div.st-emotion-cache-ocqkz7.e1f1d6gn5
+  > div
+  > div
+  > div
+  > div
+  > div {
   background-color: #ffffff;
   border: 1px solid #cccccc;
   padding: 5% 5% 5% 10%;
@@ -10,6 +74,31 @@ div.st-emotion-cache-ocqkz7.e1f1d6gn5 > div > div > div > div > div {
   border-left: 8px solid #9ad8e1 !important;
   box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
 }
+
+/* location container */
+#root
+  > div:nth-child(1)
+  > div.withScreencast
+  > div
+  > div
+  > div
+  > section.main.st-emotion-cache-uf99v8.ea3mdgi8
+  > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi5
+  > div
+  > div
+  > div
+  > div.st-emotion-cache-ocqkz7.e1f1d6gn5
+  > div
+  > div
+  > div
+  > div
+  > div
+  > div
+  > div
+  > div:nth-child(2) {
+  color: black;
+}
+
 /* Device Name */
 div.st-emotion-cache-ocqkz7.e1f1d6gn5
   > div
@@ -109,6 +198,3 @@ div.st-emotion-cache-ocqkz7.e1f1d6gn5
   text-align: center;
   align-items: center;
 }
-
-
-
