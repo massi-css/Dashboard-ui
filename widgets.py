@@ -82,3 +82,4 @@ def add_points_to_map(m, gdf):
     for i, row in gdf.iterrows():
         folium.Marker(location=[row['latitude'], row['longitude']], popup=row['deviceName']).add_to(m)
     return m
+

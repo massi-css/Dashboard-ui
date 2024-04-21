@@ -50,26 +50,15 @@ def deviceDashboard(deviceId):
         placeholder1 = col2.empty()
         placeholder6 = col3.empty()
         placeholder2 = col1.empty()
-        placeholder7 = col2.empty()
 
     while True:
         latest_data = get_latest_device_data(deviceId)
-        # temperature_in_c = latest_data['temperature'][0]['temperature']
-        # conductivity = latest_data['conductivity']
-        # oxigen = latest_data['oxygen']
-        # turbidity = latest_data['turbidity']
-        # ph = latest_data['ph']
-        # dateString= latest_data['createdAt']
-        # date_string = dateString.replace('Z', '')
-        # date_object = datetime.fromisoformat(date_string)
-        # date = date_object.strftime("%H:%M:%S")
-        # df = pd.concat([df, pd.DataFrame([[date,ph, temperature_in_c,conductivity,oxigen,turbidity]],columns=['createdAt','ph', 'temperature','conductivity','oxigen','turbidity'])], ignore_index=True)
         df = pd.DataFrame(latest_data)
         # dataframe and circle plot
         with placeholder11:
             st.dataframe(df, height=360)
         with placeholder8:
-            plot_circle(["ph","temperature","conductivity","oxigen","turbidity"],[df['ph'].iloc[0],df['temperature'].iloc[0],df['conductivity'].iloc[0],df['oxygen'].iloc[0],df['turbidity'].iloc[0]])
+            plot_circle(["ph","temperature","conductivity","turbidity"],[df['ph'].iloc[0],df['temperature'].iloc[0],df['conductivity'].iloc[0],df['turbidity'].iloc[0]])
         # water quality index
         with waterqualityPlaceholder:
             water_quality_index = calculate_wqi(df['ph'].iloc[0],df['turbidity'].iloc[0],df['conductivity'].iloc[0],df['temperature'].iloc[0])
@@ -80,21 +69,17 @@ def deviceDashboard(deviceId):
         with placeholder4:
             plot_gauge(df['conductivity'].iloc[0],"green", "µS/cm","Conductivity", 100)
         with placeholder5:
-            plot_gauge(df['oxygen'].iloc[0],"red", "mg/L","Oxigen", 100)
-        # with placeholder8:
-        #     plot_gauge(turbidity,"white", "NTU","Turbidity", 100)
+            plot_gauge(df['turbidity'].iloc[0],"red", "NTU","Turbidity", 5)
         with placeholder9:
             plot_gauge(df['ph'].iloc[0],"purple", "pH","pH", 14)
         # parameters graphs
-        with placeholder1:
+        with placeholder10:
             st.line_chart(df[['temperature','createdAt']].set_index('createdAt'),color="#0000FF")
         with placeholder2:
             st.line_chart(df[['conductivity','createdAt']].set_index('createdAt'),color="#008000")
         with placeholder6:
-            st.line_chart(df[['oxygen','createdAt']].set_index('createdAt'),color="#FF0000")
-        with placeholder7:
             st.line_chart(df[['turbidity','createdAt']].set_index('createdAt'),color="#808080")
-        with placeholder10:
+        with placeholder1:
             st.line_chart(df[['ph','createdAt']].set_index('createdAt'),color="#800080")
         time.sleep(10)
         

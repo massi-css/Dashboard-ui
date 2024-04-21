@@ -45,7 +45,10 @@ elif st.session_state.authenticated == True:
         # add the user input to the messages state
         st.session_state.messages.append({'role': 'user', 'content': prompt})
         # respond to the user input
-        response = agent.chat(prompt)
+        if uploaded_file is not None:
+            response = agent.chat(prompt)
+        else:
+            response = "Please upload a file to start the chat"
         with st.chat_message("assistant"):
             with st.spinner('Generating response...'):
                 st.write(response)
