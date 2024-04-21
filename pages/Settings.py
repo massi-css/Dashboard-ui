@@ -43,11 +43,11 @@ elif st.session_state.authenticated == True:
         if st.button("data updates frequency", key="Editfrequency"):
             st.session_state["selected_Feature"] = "data_upadtes"
             st.rerun()
-        if st.button("help", key="help"):
-            st.session_state["selected_Feature"] = "help"
-            st.rerun()
-        if st.button("feedback && reporting", key="feedback"):
-            st.session_state["selected_Feature"] = "feedback_reporting"
-            st.rerun()
+        # if st.button("help", key="help"):
+        #     st.session_state["selected_Feature"] = "help"
+        #     st.rerun()
+        # if st.button("feedback && reporting", key="feedback"):
+        #     st.session_state["selected_Feature"] = "feedback_reporting"
+        #     st.rerun()
     with displayContainer:
         settings_features.Feature_Page(st.session_state["selected_Feature"])

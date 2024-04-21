@@ -52,26 +52,29 @@ elif st.session_state.authenticated == True:
                 # Write device information to the container
                 container.title(device['deviceName'])
                 container.write(f"Location: {device['location']}")
-                buttonContainer = container.container()
                 
                 # Button to show dashboard
                 #giving it a speacial key to identify it
                 button_key = device["_id"]
-                # add new device card
-                if buttonContainer.button("See dashboard", key=button_key):
-                    st.session_state["device_num"] = device["_id"]
-                    st.rerun()
-                # Button to delete device
-                if buttonContainer.button("remove device", key=f"delete_{button_key}"):
-                    message = delete_device(device["_id"])
-                    st.success(message)
-                    st.rerun()
+                with container:
+                    col1,col2 = st.columns([1,1])
+                with col1:
+                    # add new device card
+                    if st.button("See Dashboard", key=button_key):
+                        st.session_state["device_num"] = device["_id"]
+                        st.rerun()
+                with col2:
+                    # Button to delete device
+                    if st.button("Remove Device", key=f"delete_{button_key}"):
+                        message = delete_device(device["_id"])
+                        st.success(message)
+                        st.rerun()
         # Add new device card
         add_col_index = (i + 1) % num_columns  
         add_container = columns[add_col_index].container()
         st.markdown("<div id='add_device'>", unsafe_allow_html=True)
-        add_container.title("add new device")
-        if add_container.button("add"):
+        add_container.title("Add New Device")
+        if add_container.button("Add"):
             st.switch_page("pages/NewDevice.py")
         st.markdown("</div>", unsafe_allow_html=True)
     else:

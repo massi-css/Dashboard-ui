@@ -33,16 +33,7 @@ elif st.session_state.authenticated == True:
     st.markdown("<span style='height: 20px;'></span>", unsafe_allow_html=True)
     container = st.container()
 
-    # notificationsData= ["notification1", "notification2", "notification3", "notification4"]
     notificationsData = get_notifications()
-
-    # devicesData = [
-    #         {'deviceName': 'Device 1', 'location': 'blida', 'status': 'Active','longitude': 36.531513, 'latitude': 2.967012},
-    #         {'deviceName': 'Device 2', 'location': 'alger', 'status': 'Inactive','longitude': 36.752887, 'latitude': 3.042048},
-    #         {'deviceName': 'Device 3', 'location': 'oran', 'status': 'Active','longitude': 35.691111, 'latitude': -0.641667},
-    #         {'deviceName': 'Device 4', 'location': 'constantine', 'status': 'Active','longitude': 36.365, 'latitude': 6.614722},
-    #         {'deviceName': 'Device 5', 'location': 'annaba', 'status': 'Inactive','longitude': 36.9, 'latitude': 7.767}
-    #     ]
     devicesData = get_devices()
     gdf = pd.DataFrame(devicesData)
 
