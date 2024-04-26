@@ -3,7 +3,6 @@ import plotly.express as px
 from widgets import *
 from datetime import datetime
 import time
-import random
 import pandas as pd
 from utils.utils import *
 
@@ -12,11 +11,28 @@ from utils.utils import *
 # Dasboard of each device
 def deviceDashboard(deviceId):
     device = get_device_by_id(deviceId)
-    # df = pd.DataFrame(columns=['createdAt','ph', 'temperature','conductivity','oxigen','turbidity'])
+    if 'copy' not in st.session_state:
+        st.session_state['copy'] = False
     title = f"{device['deviceName']} dashboard"
-    if st.button("back"):
-        st.session_state["device_num"] = -1
-        st.rerun()
+    deviceId  = device['_id']
+    headcol1,headcol2,headcol3,headcol4 = st.columns([1,1,1,1])
+    with headcol1: 
+        if st.button("back"):
+            st.session_state["device_num"] = -1
+            st.rerun()
+    with headcol4:
+        if st.button("copy ID to clipboard"):
+            copy_to_clipboard(deviceId)
+            st.session_state["copy"] = True
+    with headcol3:
+        if st.session_state['copy']:
+            st.success("id copied to clipboard !")
+            time.sleep(1)
+            st.session_state['copy'] = False
+            st.rerun()
+            
+    st.markdown("<span style='height: 10px;'></span>", unsafe_allow_html=True)
+
     st.title(title)
     st.markdown("<hr/>", unsafe_allow_html=True)
     main_section = st.container()
@@ -45,11 +61,11 @@ def deviceDashboard(deviceId):
         st.markdown("<hr/>", unsafe_allow_html=True)
         st.subheader("more details:")
         st.markdown("<hr/>", unsafe_allow_html=True)
-        col1,col2,col3= st.columns(3)
+        col1,col2= st.columns(2)
         placeholder10 = col1.empty()
         placeholder1 = col2.empty()
-        placeholder6 = col3.empty()
-        placeholder2 = col1.empty()
+        placeholder6 = col1.empty()
+        placeholder2 = col2.empty()
 
     while True:
         latest_data = get_latest_device_data(deviceId)
@@ -74,11 +90,14 @@ def deviceDashboard(deviceId):
             plot_gauge(df['ph'].iloc[0],"purple", "pH","pH", 14)
         # parameters graphs
         with placeholder10:
-            st.line_chart(df[['temperature','createdAt']].set_index('createdAt'),color="#0000FF")
+            # st.line_chart(df[['temperature','createdAt']].set_index('createdAt'),color="#0000FF")
+            line_chart(df,'createdAt',["ph","temperature","turbidity"],'Parameters')
         with placeholder2:
-            st.line_chart(df[['conductivity','createdAt']].set_index('createdAt'),color="#008000")
+            # st.line_chart(df[['conductivity','createdAt']].set_index('createdAt'),color="#008000")
+            scatter_chart(df,'temperature','ph','ph')
         with placeholder6:
-            st.line_chart(df[['turbidity','createdAt']].set_index('createdAt'),color="#808080")
+            # st.line_chart(df[['turbidity','createdAt']].set_index('createdAt'),color="#808080")
+            area_chart(df,'createdAt','temperature','Temperature')
         with placeholder1:
             st.line_chart(df[['ph','createdAt']].set_index('createdAt'),color="#800080")
         time.sleep(10)

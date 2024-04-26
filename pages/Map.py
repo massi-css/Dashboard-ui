@@ -17,13 +17,6 @@ if st.session_state.authenticated == False:
 elif st.session_state.authenticated == True:
     # the sidebar
     sidebar()
-    # devices = [
-    #         {'Name': 'Device 1', 'location': 'blida', 'Status': 'Active','longitude': 36.531513, 'latitude': 2.967012},
-    #         {'Name': 'Device 2', 'location': 'alger', 'Status': 'Inactive','longitude': 36.752887, 'latitude': 3.042048},
-    #         {'Name': 'Device 3', 'location': 'oran', 'Status': 'Active','longitude': 35.691111, 'latitude': -0.641667},
-    #         {'Name': 'Device 4', 'location': 'constantine', 'Status': 'Active','longitude': 36.365, 'latitude': 6.614722},
-    #         {'Name': 'Device 5', 'location': 'annaba', 'Status': 'Inactive','longitude': 36.9, 'latitude': 7.767}
-    #     ]
     devices = get_devices()
     gdf = pd.DataFrame(devices)
     st.title("Map")

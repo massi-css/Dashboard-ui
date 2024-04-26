@@ -3,6 +3,7 @@ import plotly.graph_objects as go
 import streamlit as st
 import folium
 from utils.utils import *
+import altair as alt
 
 # the sidebar
 def sidebar():
@@ -83,3 +84,53 @@ def add_points_to_map(m, gdf):
         folium.Marker(location=[row['latitude'], row['longitude']], popup=row['deviceName']).add_to(m)
     return m
 
+def line_chart(df, x, y_columns, title):
+    # Reshape the DataFrame from wide format to long format
+    df_long = df.melt(id_vars=x, value_vars=y_columns, var_name='column', value_name='value')
+
+    chart = alt.Chart(df_long).mark_line().encode(
+        alt.X(x),
+        alt.Y('value:Q'),
+        color='column:N'  # Use the 'column' column for the color encoding
+    ).properties(
+        title=title,
+        width=500
+    )
+
+    st.altair_chart(chart)
+
+def scatter_chart(df, x, y, title):
+    chart = alt.Chart(df).mark_point().encode(
+    x=x,
+    y=y,
+    color='Origin:N',
+    tooltip=['Name:N']
+).properties(
+    title=title,
+    width=500
+)
+
+    st.altair_chart(chart)
+
+
+def area_chart(df, x, y, title):
+    chart = alt.Chart(df).mark_area(
+        line={'color':'darkgreen'},
+        color=alt.Gradient(
+            gradient='linear',
+            stops=[alt.GradientStop(color='white', offset=0),
+                alt.GradientStop(color='darkgreen', offset=1)],
+            x1=1,
+            x2=1,
+            y1=1,
+            y2=0
+        )
+    ).encode(
+        alt.X(x),
+        alt.Y(y)
+    ).properties(
+        title=title,
+        width=500
+    )
+
+    st.altair_chart(chart)

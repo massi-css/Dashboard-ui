@@ -4,6 +4,7 @@ import yaml
 from yaml.loader import SafeLoader
 import requests
 from json import JSONDecodeError
+import pyperclip
 
 
 
@@ -233,4 +234,6 @@ def calculate_wqi(ph, turbidity, conductivity, temperature):
     
     return wqi
 
+def copy_to_clipboard(text):
+    pyperclip.copy(text)
     
