@@ -1,3 +1,4 @@
+import random
 from pymongo import MongoClient 
 import streamlit as st
 import yaml 
@@ -236,4 +237,37 @@ def calculate_wqi(ph, turbidity, conductivity, temperature):
 
 def copy_to_clipboard(text):
     pyperclip.copy(text)
+# get latest 10 rows of forcasted data
+async def get_latest_forcasted_data(deviceId):
+    try:
+        response = await requests.get(f"{server_uri}/forcast/{deviceId}/all")
+        data = response.json()
+        return data
+    except JSONDecodeError:
+        print("Empty response received from the server")
+        return {}
+
+# get latest line of forcasted data
+
+async def get_last_forcasted_data(deviceId):
+    try:
+        response = await requests.get(f"{server_uri}/forcast/{deviceId}")
+        data = response.json()
+        return data
+    except JSONDecodeError :
+        print("Empty response received from the server")
+        return {}
     
+async def forcast_next_day(deviceId,data):
+    try:
+        response = await requests.post(f"{server_uri}/forcast/{deviceId}",json=data)
+        data = response.json()
+        return data
+    except JSONDecodeError :
+        print("Empty response received from the server")
+        return {} 
+    
+def generate_random_lat_long(min_lat, max_lat, min_long, max_long):
+    latitude = random.uniform(min_lat, max_lat)
+    longitude = random.uniform(min_long, max_long)
+    return latitude, longitude

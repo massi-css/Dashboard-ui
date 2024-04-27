@@ -1,3 +1,4 @@
+import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
@@ -112,8 +113,7 @@ def scatter_chart(df, x, y, title):
 
     st.altair_chart(chart)
 
-
-def area_chart(df, x, y, title):
+def area_chart(df, x, y, title, threshold=None):
     chart = alt.Chart(df).mark_area(
         line={'color':'darkgreen'},
         color=alt.Gradient(
@@ -133,4 +133,53 @@ def area_chart(df, x, y, title):
         width=500
     )
 
+    if threshold is not None:
+        rule = alt.Chart(df).mark_rule(color='red').encode(
+            y=alt.value(threshold)
+        )
+        chart = alt.layer(chart, rule).resolve_scale(y='shared')
+        chart = chart + rule
+
     st.altair_chart(chart)
+
+def bar_chart_with_threshold(source,x,y):
+    
+    threshold = 50
+
+    bars = alt.Chart(source).mark_bar(color="steelblue").encode(
+        x=f"{x}:O",
+        y=f"{y}:Q",
+    ).properties(
+        width=500
+    )
+
+    highlight = bars.mark_bar(color="#e45755").encode(
+        y2=alt.Y2(datum=threshold)
+    ).transform_filter(
+    alt.datum.y > threshold
+    )
+
+    rule = alt.Chart().mark_rule(color="#FBC02D").encode(
+        y=alt.Y(datum=threshold)
+    )
+
+    label = rule.mark_text(
+        x="width",
+        dx=-2,
+        align="right",
+        baseline="bottom",
+        text="danger",
+        color="#FBC02D"
+    )
+
+    st.altair_chart(bars + highlight + rule + label)
+
+def filled_step_chart(df,x,y):
+    alt.Chart(df).mark_area(
+    color="lightblue",
+    interpolate='step-after',
+    line=True
+    ).encode(
+        x=x,
+        y=y
+    ).transform_filter(alt.datum.symbol == 'GOOG')

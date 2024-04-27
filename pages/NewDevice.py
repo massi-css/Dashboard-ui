@@ -14,6 +14,7 @@ if st.session_state.authenticated == False:
 elif st.session_state.authenticated == True:
     # the sidebar
     sidebar()
+    latitude, longitude = generate_random_lat_long(max_lat=36.605496,min_lat=36.464257,max_long=3.022199,min_long=2.767970)
     # back button 
     if st.button("Back"):
         st.switch_page("pages/Devices.py")
@@ -22,8 +23,8 @@ elif st.session_state.authenticated == True:
         device_name = st.text_input("Device name")
         location = st.text_input("Location")
         status = st.selectbox("Status", ["Active", "Inactive"])
-        longitude = st.number_input("Longitude")
-        latitude = st.number_input("Latitude")
+        # latitude = st.number_input("Latitude", value=latitude, format="%.8f")
+        # longitude = st.number_input("Longitude", value=longitude, format="%.8f")
         submit = st.form_submit_button("Add device")
         if submit:
             data={

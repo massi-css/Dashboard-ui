@@ -47,7 +47,14 @@ def deviceDashboard(deviceId):
             placeholder8 = col2.empty()
         st.markdown("<hr/>", unsafe_allow_html=True)
         st.subheader("water quality index: ")
-        waterqualityPlaceholder = st.empty()
+        st.markdown("<hr/>", unsafe_allow_html=True)
+        qualitycol1,qualitycol2 = st.columns(2)
+        with qualitycol1 :
+            chartwaterqualityPlaceholder = st.empty()
+        with qualitycol2 :
+            waterqualityPlaceholder = st.empty()
+            st.markdown("<span style='height: 0px;'></span>", unsafe_allow_html=True)
+            messageQuality = st.empty()
         st.markdown("<hr/>", unsafe_allow_html=True)
         # parameters indicators
         st.subheader("water parameters:")
@@ -77,8 +84,13 @@ def deviceDashboard(deviceId):
             plot_circle(["ph","temperature","conductivity","turbidity"],[df['ph'].iloc[0],df['temperature'].iloc[0],df['conductivity'].iloc[0],df['turbidity'].iloc[0]])
         # water quality index
         with waterqualityPlaceholder:
-            water_quality_index = calculate_wqi(df['ph'].iloc[0],df['turbidity'].iloc[0],df['conductivity'].iloc[0],df['temperature'].iloc[0])
-            plot_gauge(water_quality_index,"white", "WQI","Water Quality Index", 100)
+            # water_quality_index = calculate_wqi(df['ph'].iloc[0],df['turbidity'].iloc[0],df['conductivity'].iloc[0],df['temperature'].iloc[0])
+            plot_gauge(df['qualityIndex'].iloc[0],"white", "WQI","Water Quality Index", 100)
+        with chartwaterqualityPlaceholder:
+            area_chart(df,'createdAt','qualityIndex','Water Quality chart',threshold=50)
+            # bar_chart_with_threshold(df[["qualityIndex","createdAt"]],'createdAt','qualityIndex')
+        with messageQuality:
+            st.write("message quality will be here")
         # parameters indicators
         with placeholder3:
             plot_gauge(df['temperature'].iloc[0],"blue", "°C","Temperature", 45)
