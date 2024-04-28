@@ -96,6 +96,7 @@ def line_chart(df, x, y_columns, title):
     ).properties(
         title=title,
         # width=500
+        height=500
     )
 
     st.altair_chart(chart, use_container_width=True)
@@ -142,47 +143,39 @@ def area_chart(df, x, y, title, threshold=None):
 
     st.altair_chart(chart)
 
-def bar_chart_with_threshold(source,x,y):
+def bar_chart_with_threshold(source,x,y,threshold=None,label="danger"):
     
-    threshold = 50
 
-    bars = alt.Chart(source).mark_bar(color="steelblue").encode(
+    bars = alt.Chart(source).mark_bar(color="#00CC96").encode(
         x=f"{x}:O",
         y=f"{y}:Q",
     ).properties(
         width=500
     )
 
-    highlight = bars.mark_bar(color="#e45755").encode(
+    if threshold is not None:
+        highlight = bars.mark_bar(color="#e45755").encode(
         y2=alt.Y2(datum=threshold)
-    ).transform_filter(
-    alt.datum.y > threshold
-    )
+        ).transform_filter(
+        alt.datum[y] > threshold
+        )
 
-    rule = alt.Chart().mark_rule(color="#FBC02D").encode(
-        y=alt.Y(datum=threshold)
-    )
+        rule = alt.Chart().mark_rule(color="#e45755").encode(
+            y=alt.Y(datum=threshold)
+        )
 
-    label = rule.mark_text(
-        x="width",
-        dx=-2,
-        align="right",
-        baseline="bottom",
-        text="danger",
-        color="#FBC02D"
-    )
+        label = rule.mark_text(
+            x="width",
+            dx=-2,
+            align="right",
+            baseline="bottom",
+            text=label,
+            color="#FFFFFF"
+        )
 
-    st.altair_chart(bars + highlight + rule + label)
-
-def filled_step_chart(df,x,y):
-    alt.Chart(df).mark_area(
-    color="lightblue",
-    interpolate='step-after',
-    line=True
-    ).encode(
-        x=x,
-        y=y
-    ).transform_filter(alt.datum.symbol == 'GOOG')
+        st.altair_chart(bars + highlight + rule + label)
+    else:
+        st.altair_chart(bars)
 
 def horizontal_bars_chart(df, x, y):
     chart = alt.Chart(df).mark_bar().encode(

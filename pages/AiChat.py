@@ -1,12 +1,18 @@
+import matplotlib
 import streamlit as st
 from utils.utils import *
 import pandas as pd
 from widgets import sidebar
 import os
 from pandasai import SmartDataframe
+from pandasai.llm import OpenAI
 
 # configure the page
 st.set_page_config(page_title="IOT Dashboard", layout="wide",initial_sidebar_state='expanded')
+
+# llm  = OpenAI(api_token=api_key)
+os.environ["PANDASAI_API_KEY"] = api_key
+
 
 #initialize the authentication status
 if 'authenticated' not in st.session_state:
@@ -20,7 +26,7 @@ elif st.session_state.authenticated == True:
         st.session_state.messages = []
     # the sidebar
     sidebar()
-    os.environ["PANDASAI_API_KEY"] = api_key
+    
     # the main content
     st.title("AI Chat")
     uploaded_file = st.file_uploader("Choose a file", type=['csv'])
@@ -28,7 +34,7 @@ elif st.session_state.authenticated == True:
         if uploaded_file is not None:
             df = pd.read_csv(uploaded_file)
             st.write(df.tail(5))
-            agent = SmartDataframe(df)
+            agent = SmartDataframe(df)    
             st.success('Data loaded successfully')
         else:
             st.info('Please upload a file to start the chat')

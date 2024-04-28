@@ -44,17 +44,9 @@ def deviceDashboard(deviceId):
     st.markdown("<span style='height: 10px;'></span>", unsafe_allow_html=True)
 
     st.title(title)
-    st.markdown("<hr/>", unsafe_allow_html=True)
     main_section = st.container()
     with main_section:
         # parameters indicators
-        col1,col2= st.columns([2,1])
-        with col1:
-            st.subheader("collected data:")
-            placeholder11 = col1.empty()
-        with col2:
-            st.subheader("status of water:")
-            placeholder8 = col2.empty()
         st.markdown("<hr/>", unsafe_allow_html=True)
         st.subheader("water quality index: ")
         st.markdown("<hr/>", unsafe_allow_html=True)
@@ -75,46 +67,55 @@ def deviceDashboard(deviceId):
         placeholder4 = col2.empty()
         placeholder3 = col3.empty()
         placeholder5 = col4.empty()
-        # forcasted data 
+        # data analytics
         st.markdown("<hr/>", unsafe_allow_html=True)
-        st.subheader("Forcasted data:")
+        st.subheader("Data analytics:")
         st.markdown("<hr/>", unsafe_allow_html=True)
-        forcastcol1,forcastcol2= st.columns([1,3])
-        with forcastcol1:
-            st.markdown("#### parameters :")
+        col1,col2= st.columns([2,1])
+        with col1:
+            st.markdown("#### collected data :")
+            placeholder11 = col1.empty()
+        with col2:
+            st.markdown("#### the expect for next day :")
             st.markdown("<span style='height: 10px;'></span>", unsafe_allow_html=True)
             forcastph = st.empty()
             forcastturbidity = st.empty()
             forcasttemperature = st.empty()
-        with forcastcol2:
-            forcastPlaceholder = st.empty()
         # parameters graphs
         st.markdown("<hr/>", unsafe_allow_html=True)
         st.subheader("more details:")
         st.markdown("<hr/>", unsafe_allow_html=True)
-        # col1,col2= st.columns(2)
         placeholder10 = st.empty()
-        # placeholder1 = col2.empty()
-        # placeholder6 = col1.empty()
-        # placeholder2 = col2.empty()
 
     while True:
         latest_data = get_latest_device_data(deviceId)
         df = pd.DataFrame(latest_data)
         forcasteddata = get_last_forcasted_data(deviceId)
-        forcasteddata = forcasteddata[0] if forcasteddata else None
-        # dataframe and circle plot
+        if forcasteddata:
+            forcasteddata = forcasteddata[0] 
+
+
+        # dataframe and forcasted metrics
         with placeholder11:
             st.dataframe(df, height=360)
-        with placeholder8:
-            plot_circle(["ph","temperature","conductivity","turbidity"],[df['ph'].iloc[0],df['temperature'].iloc[0],df['conductivity'].iloc[0],df['turbidity'].iloc[0]])
+        with forcastturbidity:
+            diff = forcasteddata['next_day_turb'] - df['turbidity'].iloc[0]
+            diff = format(diff, '.2f')
+            st.metric(label="Turbidity", value=f"{format(forcasteddata['next_day_turb'],'.2f')} NTU", delta=f"{diff} NTU")
+        with forcastph:
+            diff = forcasteddata['next_day_pH'] - df['ph'].iloc[0]
+            diff = format(diff, '.2f')
+            st.metric(label="pH", value=f"{format(forcasteddata['next_day_pH'],'.2f')} pH", delta=f"{diff} pH")
+        with forcasttemperature:
+            diff = forcasteddata['next_day_temp'] - df['temperature'].iloc[0]  
+            diff = format(diff, '.2f') 
+            st.metric(label="Temperature", value=f"{format(forcasteddata['next_day_temp'],'.2f')} °C", delta=f"{diff} °C")
+        time.sleep(10)
         # water quality index
         with waterqualityPlaceholder:
-            # water_quality_index = calculate_wqi(df['ph'].iloc[0],df['turbidity'].iloc[0],df['conductivity'].iloc[0],df['temperature'].iloc[0])
-            plot_gauge(df['qualityIndex'].iloc[0],"white", "WQI","Water Quality Index", 100)
+            plot_gauge(df['qualityIndex'].iloc[0],"#00CC96", "WQI","Water Quality Index", 100)
         with chartwaterqualityPlaceholder:
-            area_chart(df,'createdAt','qualityIndex','Water Quality chart',threshold=50)
-            # bar_chart_with_threshold(df[["qualityIndex","createdAt"]],'createdAt','qualityIndex')
+            bar_chart_with_threshold(df[["qualityIndex","createdAt"]],'createdAt','qualityIndex',40,"be careful !")
         with messageQuality:
             st.write("water quality comment here")
         # parameters indicators
@@ -128,32 +129,6 @@ def deviceDashboard(deviceId):
             plot_gauge(df['ph'].iloc[0],"purple", "pH","pH", 14)
         # parameters graphs
         with placeholder10:
-            # st.line_chart(df[['temperature','createdAt']].set_index('createdAt'),color="#0000FF")
             line_chart(df,'createdAt',["ph","temperature","turbidity"],'Parameters')
-        # with placeholder2:
-        #     # st.line_chart(df[['conductivity','createdAt']].set_index('createdAt'),color="#008000")
-        #     # scatter_chart(df,'temperature','ph','ph')
-        #     st.scatter_chart(df[['temperature','ph']].set_index('temperature'))
-        # with placeholder6:
-        #     # st.line_chart(df[['turbidity','createdAt']].set_index('createdAt'),color="#808080")
-        #     area_chart(df,'createdAt','temperature','Temperature')
-        # with placeholder1:
-        #     st.line_chart(df[['ph','createdAt']].set_index('createdAt'),color="#800080")
-        # forcasted data
-        with forcastturbidity:
-            diff = forcasteddata['next_day_turb'] - df['turbidity'].iloc[0]
-            diff = format(diff, '.2f')
-            st.metric(label="Turbidity", value=f"{format(forcasteddata['next_day_turb'],'.2f')} NTU", delta=f"{diff} NTU")
-        with forcastph:
-            diff = forcasteddata['next_day_pH'] - df['ph'].iloc[0]
-            diff = format(diff, '.2f')
-            st.metric(label="pH", value=f"{format(forcasteddata['next_day_pH'],'.2f')} pH", delta=f"{diff} pH")
-        with forcasttemperature:
-            # plot_gauge(forcasteddata['next_day_temp'],"blue", "°C","Temperature", 45)
-            diff = forcasteddata['next_day_temp'] - df['temperature'].iloc[0]  
-            diff = format(diff, '.2f') 
-            st.metric(label="Temperature", value=f"{format(forcasteddata['next_day_temp'],'.2f')} °C", delta=f"{diff} °C")
-        with forcastPlaceholder:
-            st.write("hmmm")
-        time.sleep(10)
+
         
