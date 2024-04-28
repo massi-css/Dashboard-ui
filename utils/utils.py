@@ -249,18 +249,18 @@ async def get_latest_forcasted_data(deviceId):
 
 # get latest line of forcasted data
 
-async def get_last_forcasted_data(deviceId):
+def get_last_forcasted_data(deviceId):
     try:
-        response = await requests.get(f"{server_uri}/forcast/{deviceId}")
+        response = requests.get(f"{server_uri}/forcast/{deviceId}")
         data = response.json()
         return data
     except JSONDecodeError :
         print("Empty response received from the server")
         return {}
     
-async def forcast_next_day(deviceId,data):
+def forcast_next_day(deviceId,data):
     try:
-        response = await requests.post(f"{server_uri}/forcast/{deviceId}",json=data)
+        response = requests.post(f"{server_uri}/forcast/{deviceId}",json=data)
         data = response.json()
         return data
     except JSONDecodeError :

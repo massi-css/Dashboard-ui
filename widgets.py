@@ -95,10 +95,10 @@ def line_chart(df, x, y_columns, title):
         color='column:N'  # Use the 'column' column for the color encoding
     ).properties(
         title=title,
-        width=500
+        # width=500
     )
 
-    st.altair_chart(chart)
+    st.altair_chart(chart, use_container_width=True)
 
 def scatter_chart(df, x, y, title):
     chart = alt.Chart(df).mark_point().encode(
@@ -183,3 +183,13 @@ def filled_step_chart(df,x,y):
         x=x,
         y=y
     ).transform_filter(alt.datum.symbol == 'GOOG')
+
+def horizontal_bars_chart(df, x, y):
+    chart = alt.Chart(df).mark_bar().encode(
+        alt.X(y),
+        alt.Y(x)
+    ).properties(
+        height=320,
+        width=500
+    )
+    st.altair_chart(chart)

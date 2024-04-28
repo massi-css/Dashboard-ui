@@ -36,10 +36,17 @@ elif st.session_state.authenticated == True:
     notificationsData = get_notifications()
     devicesData = get_devices()
     gdf = pd.DataFrame(devicesData)
-
+    # Create a DataFrame contains eech device name with its qualityIndex data
+    if gdf.shape[0] > 0 :
+        for i, item in gdf.iterrows():
+            data = get_latest_device_data(item['_id'])
+            gdf.loc[i, 'qualityIndex'] = data[0].get('qualityIndex')
+    
+    gdf = gdf.drop(columns=["datas","forcasts"], axis=1)
+    st.write(gdf)
     with container:
         devices,notifications = st.columns([2,1])
-        chat,Map = st.columns([1,2])
+        generalGraph,Map = st.columns([1,1])
         with devices:
             st.subheader("Devices")
             st.markdown("<span style='height: 10px;'></span>", unsafe_allow_html=True)
@@ -69,12 +76,11 @@ elif st.session_state.authenticated == True:
                         st.write(notification.get('message'))
                 else:
                     st.write(notificationsData.get('message'))
-        with chat:
-            st.subheader("Chat")
-            st.markdown("<span style='height: 10px;'></span>", unsafe_allow_html=True)
-            st.markdown("<hr/>", unsafe_allow_html=True)
-            st.write("Chat with ai")
-            st.markdown("<hr/>", unsafe_allow_html=True)
+        with generalGraph:
+            st.subheader("all devices status")
+            st.markdown("<span style='height: 30px;'></span>", unsafe_allow_html=True)
+            horizontal_bars_chart(gdf, 'deviceName', 'qualityIndex')
+      
         with Map:
             st.subheader("Map")
             st.markdown("<span style='height: 10px;'></span>", unsafe_allow_html=True)
@@ -84,7 +90,7 @@ elif st.session_state.authenticated == True:
                 # Convert the map to an HTML string
                 m_html = m._repr_html_()
                 # Display the map
-                components.html(m_html, height=420)
+                components.html(m_html, height=310)
             else:
                 cols = st.columns(1)
                 cols[0].subheader("add at least one device to see the map")
