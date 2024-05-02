@@ -14,18 +14,16 @@
   > div.st-emotion-cache-0.e1f1d6gn0
   > div
   > div
-  > div:nth-child(n) {
-    background-color: black;
-    border-radius: 10px;
-    padding-left: 5%;
-    color: gray;
-    height: fit-content;
-    margin-bottom: 10px;
-    padding: 5%;
-    border-left: transparent solid 2px;
-
+  > div {
+  background-color: black;
+  border-radius: 10px;
+  padding-left: 5%;
+  color: gray;
+  height: fit-content;
+  margin-bottom: 10px;
+  padding: 5%;
+  border-left: transparent solid 2px;
 }
-
 
 /* hover effect over notifications blocks */
 
@@ -44,10 +42,8 @@
   > div
   > div
   > div:hover {
-    border-left: #9ad8e1 solid 2px;
-    transition: all 0.5s;
-    cursor: default;
-    color: white;
-  }
-
-
+  border-left: #9ad8e1 solid 2px;
+  transition: all 0.5s;
+  cursor: default;
+  color: white;
+}

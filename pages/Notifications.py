@@ -24,16 +24,15 @@ elif st.session_state.authenticated == True:
             unsafe_allow_html=True
         ) 
     st.title("Notifications")
-    
-    # notificationsData= ["Notification1", "Notification2", "Notification3", "Notification4"]
+    st.markdown("<span style='height: 20px;'></span>", unsafe_allow_html=True)
     notificationsData = get_notifications()
       
     notificationContainer = st.container()
     if isinstance(notificationsData,list):
-        # st.write("List of notifications")
         with notificationContainer:
             for notification in notificationsData:
-                st.write(notification["message"])
+                notif = f"{notification['message']} \n Time : {notification['createdAt']}"
+                st.write(notif)
     else:
         st.write("No notifications available")
         
