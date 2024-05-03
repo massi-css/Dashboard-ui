@@ -1,7 +1,5 @@
 import streamlit as st
-import plotly.express as px
 from widgets import *
-from datetime import datetime
 import time
 import pandas as pd
 from utils.utils import *
@@ -110,7 +108,6 @@ def deviceDashboard(deviceId):
             diff = forcasteddata['next_day_temp'] - df['temperature'].iloc[0]  
             diff = format(diff, '.2f') 
             st.metric(label="Temperature", value=f"{format(forcasteddata['next_day_temp'],'.2f')} °C", delta=f"{diff} °C")
-        time.sleep(10)
         # water quality index
         with waterqualityPlaceholder:
             plot_gauge(df['qualityIndex'].iloc[0],"#00CC96", "WQI","Water Quality Index", 100)
@@ -130,5 +127,7 @@ def deviceDashboard(deviceId):
         # parameters graphs
         with placeholder10:
             line_chart(df,'createdAt',["ph","temperature","turbidity"],'Parameters')
+
+        time.sleep(10)
 
         
