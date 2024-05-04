@@ -85,6 +85,15 @@ def deviceDashboard(deviceId):
         st.markdown("<hr/>", unsafe_allow_html=True)
         placeholder10 = st.empty()
 
+        datatoforcast = get_latest_device_data(deviceId)
+        datatoforcast = datatoforcast[0]
+        datatoforcastformated  ={
+            "pH": datatoforcast['ph'],
+            "temperature": datatoforcast['temperature'],
+            "turbidity": datatoforcast['turbidity'],
+        }
+        forcast_next_day(deviceId=deviceId, data=datatoforcastformated)
+
     while True:
         latest_data = get_latest_device_data(deviceId)
         df = pd.DataFrame(latest_data)
