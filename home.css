@@ -200,31 +200,14 @@
 
 /* empty map style  */
 
-#root
-  > div:nth-child(1)
-  > div.withScreencast
-  > div
-  > div
-  > div
-  > section.main.st-emotion-cache-uf99v8.ea3mdgi8
-  > div.block-container.st-emotion-cache-z5fcl4.ea3mdgi5
-  > div
-  > div
-  > div
-  > div.st-emotion-cache-0.e1f1d6gn0
-  > div
-  > div
-  > div:nth-child(2)
-  > div.st-emotion-cache-115gedg.e1f1d6gn3
-  > div
-  > div
-  > div
-  > div.st-emotion-cache-ocqkz7.e1f1d6gn5
-  > div {
+#add-at-least-one-device-to-see-the-map > div{
     background-color: black;
     border-radius: 10px;
-    padding: 5%;
+    padding: 10%;
+    padding-right: 40px;
+    padding-left: unset;
     display: flex;
+    /* text-align: center; */
     justify-content: center;
     align-items: center;
     flex-direction: column;

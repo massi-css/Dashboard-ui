@@ -42,8 +42,8 @@ elif st.session_state.authenticated == True:
             data = get_latest_device_data(item['_id'])
             gdf.loc[i, 'qualityIndex'] = data[0].get('qualityIndex')
     
-    gdf = gdf.drop(columns=["datas","forcasts"], axis=1)
-    st.write(gdf)
+        gdf = gdf.drop(columns=["datas","forcasts","notifications"], axis=1)
+        st.write(gdf)
     with container:
         devices,notifications = st.columns([2,1])
         generalGraph,Map = st.columns([1,1])
@@ -79,7 +79,8 @@ elif st.session_state.authenticated == True:
         with generalGraph:
             st.subheader("all devices status")
             st.markdown("<span style='height: 30px;'></span>", unsafe_allow_html=True)
-            horizontal_bars_chart(gdf, 'deviceName', 'qualityIndex')
+            if gdf.shape[0] > 0:
+                horizontal_bars_chart(gdf, 'deviceName', 'qualityIndex')
       
         with Map:
             st.subheader("Map")

@@ -23,10 +23,13 @@ elif st.session_state.authenticated == True:
     st.markdown("<span style='height: 20px;'></span>", unsafe_allow_html=True)
     container = st.container()
     with container:
-        m = init_map(gdf=gdf)
-        m = add_points_to_map(m, gdf)
-        # Convert the map to an HTML string
-        m_html = m._repr_html_()
-        # Display the map
-        components.html(m_html, height=550)
+        if gdf.shape[0] > 0:
+            m = init_map(gdf=gdf)
+            m = add_points_to_map(m, gdf)
+            # Convert the map to an HTML string
+            m_html = m._repr_html_()
+            # Display the map
+            components.html(m_html, height=550)
+        else:
+            st.write("No devices found")
         
