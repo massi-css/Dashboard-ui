@@ -25,7 +25,11 @@ elif st.session_state.authenticated == True:
         status = st.selectbox("Status", ["Active", "Inactive"])
         # latitude = st.number_input("Latitude", value=latitude, format="%.8f")
         # longitude = st.number_input("Longitude", value=longitude, format="%.8f")
-        submit = st.form_submit_button("Add device")
+        col1, col2,spacecol = st.columns([1,2,3])
+        with col1:
+            submit = st.form_submit_button("Add device")
+        with col2:
+            spinnercontainer = st.empty();
         if submit:
             data={
                 'deviceName': device_name,
@@ -34,7 +38,9 @@ elif st.session_state.authenticated == True:
                 'longitude': longitude,
                 'latitude': latitude
             }
-            device = create_device(data)
+            with spinnercontainer:
+                with st.spinner("Adding device..."):
+                    device = create_device(data)
             if device:
                 st.success("Device added successfully")
                 st.switch_page("pages/Devices.py")

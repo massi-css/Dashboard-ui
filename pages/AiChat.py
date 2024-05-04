@@ -1,4 +1,3 @@
-import matplotlib
 import streamlit as st
 from utils.utils import *
 import pandas as pd
@@ -7,16 +6,6 @@ import os
 from pandasai import SmartDataframe
 from pandasai.responses.response_parser import ResponseParser
 from PIL import Image
-import io
-# from pandasai.callbacks import BaseCallback
-
-# class StreamlitCallback(BaseCallback):
-#     def __init__(self, container) -> None:
-#         """Initialize callback handler."""
-#         self.container = container
-
-#     def on_code(self, response: str):
-#         self.container.code(response)
 
 
 class StreamlitResponse(ResponseParser):
@@ -53,6 +42,16 @@ elif st.session_state.authenticated == True:
         st.session_state.messages = []
     # the sidebar
     sidebar()
+
+    with open("aichat.css") as f:
+            st.markdown(
+                f"""
+                <style>
+                    {f.read()}
+                </style>
+                """,
+                unsafe_allow_html=True
+            )
     
     # the main content
     st.title("AI Chat")
