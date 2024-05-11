@@ -90,7 +90,7 @@ def line_chart(df, x, y_columns, title):
     df_long = df.melt(id_vars=x, value_vars=y_columns, var_name='column', value_name='value')
 
     chart = alt.Chart(df_long).mark_line().encode(
-        alt.X(x),
+        alt.X(x,sort="descending"),
         alt.Y('value:Q'),
         color='column:N'  # Use the 'column' column for the color encoding
     ).properties(
@@ -147,7 +147,7 @@ def bar_chart_with_threshold(source,x,y,threshold=None,label="danger"):
     
 
     bars = alt.Chart(source).mark_bar(color="#e45755").encode(
-        x=f"{x}:O",
+        x=alt.X(f"{x}:O", sort='descending'),
         y=f"{y}:Q",
     ).properties(
         width=500
