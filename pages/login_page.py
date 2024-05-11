@@ -16,7 +16,7 @@ with st.form(key='my_form'):
     if submit_button:
         if authenticate_user(UsersCollection, username, password):
             st.success('You are now logged in!')
-            # st.session_state.authenticated = set_authentication_status(True)
+            st.session_state.authenticated = set_authentication_status(True)
             st.switch_page("Home.py")
         else:
             st.error('Invalid username or password')
