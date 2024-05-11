@@ -9,17 +9,23 @@ import pyperclip
 
 
 
-
-# initialize the config
-with open('config/config.yaml') as file:
-    config = yaml.load(file, Loader=SafeLoader)
+# for devlopment purposes we used the config file to store the uri and database name
+# but for production we will use the environment variables to store the uri and database name
+# # initialize the config
+# with open('config/config.yaml') as file:
+#     config = yaml.load(file, Loader=SafeLoader)
 
 # retieve the uri, database name from the config file
-uri = config['mongodb']['uri']
-database_name = config['mongodb']['database']
-server_uri = config['server']['uri']
-api_key = config['APIKEY']['key']
-user_id = config['USERID']['id']
+# uri = config['mongodb']['uri']
+# database_name = config['mongodb']['database']
+# server_uri = config['server']['uri']
+# api_key = config['APIKEY']['key']
+# user_id = config['USERID']['id']
+uri = st.secrets['mongodb']['uri']
+database_name = st.secrets['mongodb']['database']
+server_uri = st.secrets['server']['uri']
+api_key = st.secrets['APIKEY']['key']
+user_id = st.secrets['USERID']['id']
 
 
 # connect to mongo db
