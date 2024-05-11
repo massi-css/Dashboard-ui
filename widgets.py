@@ -1,8 +1,10 @@
+import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
 import folium
 from utils.utils import *
+import altair as alt
 
 # the sidebar
 def sidebar():
@@ -83,3 +85,104 @@ def add_points_to_map(m, gdf):
         folium.Marker(location=[row['latitude'], row['longitude']], popup=row['deviceName']).add_to(m)
     return m
 
+def line_chart(df, x, y_columns, title):
+    # Reshape the DataFrame from wide format to long format
+    df_long = df.melt(id_vars=x, value_vars=y_columns, var_name='column', value_name='value')
+
+    chart = alt.Chart(df_long).mark_line().encode(
+        alt.X(x,sort="descending"),
+        alt.Y('value:Q'),
+        color='column:N'  # Use the 'column' column for the color encoding
+    ).properties(
+        title=title,
+        # width=500
+        height=500
+    )
+
+    st.altair_chart(chart, use_container_width=True)
+
+def scatter_chart(df, x, y, title):
+    chart = alt.Chart(df).mark_point().encode(
+    x=x,
+    y=y,
+    color='Origin:N',
+    tooltip=['Name:N']
+).properties(
+    title=title,
+    width=500
+)
+
+    st.altair_chart(chart)
+
+def area_chart(df, x, y, title, threshold=None):
+    chart = alt.Chart(df).mark_area(
+        line={'color':'darkgreen'},
+        color=alt.Gradient(
+            gradient='linear',
+            stops=[alt.GradientStop(color='white', offset=0),
+                alt.GradientStop(color='darkgreen', offset=1)],
+            x1=1,
+            x2=1,
+            y1=1,
+            y2=0
+        )
+    ).encode(
+        alt.X(x),
+        alt.Y(y)
+    ).properties(
+        title=title,
+        width=500
+    )
+
+    if threshold is not None:
+        rule = alt.Chart(df).mark_rule(color='red').encode(
+            y=alt.value(threshold)
+        )
+        chart = alt.layer(chart, rule).resolve_scale(y='shared')
+        chart = chart + rule
+
+    st.altair_chart(chart)
+
+def bar_chart_with_threshold(source,x,y,threshold=None,label="danger"):
+    
+
+    bars = alt.Chart(source).mark_bar(color="#e45755").encode(
+        x=alt.X(f"{x}:O", sort='descending'),
+        y=f"{y}:Q",
+    ).properties(
+        width=500
+    )
+
+    if threshold is not None:
+        highlight = bars.mark_bar(color="#00CC96").encode(
+        y2=alt.Y2(datum=threshold)
+        ).transform_filter(
+        alt.datum[y] > threshold
+        )
+
+        rule = alt.Chart().mark_rule(color="#e45755").encode(
+            y=alt.Y(datum=threshold)
+        )
+
+        label = rule.mark_text(
+            x="width",
+            dx=-2,
+            align="right",
+            baseline="bottom",
+            text=label,
+            color="#FFFFFF"
+        )
+
+        st.altair_chart(bars + highlight + rule + label)
+    else:
+        st.altair_chart(bars)
+
+def horizontal_bars_chart(df, x, y):
+    chart = alt.Chart(df).mark_bar().encode(
+        alt.X(y),
+        alt.Y(x)
+    ).properties(
+        height=320,
+        width=500
+    )
+    st.altair_chart(chart)

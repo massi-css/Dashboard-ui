@@ -1,23 +1,31 @@
+import random
 from pymongo import MongoClient 
 import streamlit as st
-import yaml 
-from yaml.loader import SafeLoader
+# import yaml 
+# from yaml.loader import SafeLoader
 import requests
 from json import JSONDecodeError
+import pyperclip
 
 
 
-
-# initialize the config
-with open('config/config.yaml') as file:
-    config = yaml.load(file, Loader=SafeLoader)
+# for devlopment purposes we used the config file to store the uri and database name
+# but for production we will use the environment variables to store the uri and database name
+# # initialize the config
+# with open('config/config.yaml') as file:
+#     config = yaml.load(file, Loader=SafeLoader)
 
 # retieve the uri, database name from the config file
-uri = config['mongodb']['uri']
-database_name = config['mongodb']['database']
-server_uri = config['server']['uri']
-api_key = config['APIKEY']['key']
-user_id = config['USERID']['id']
+# uri = config['mongodb']['uri']
+# database_name = config['mongodb']['database']
+# server_uri = config['server']['uri']
+# api_key = config['APIKEY']['key']
+# user_id = config['USERID']['id']
+uri = st.secrets['mongodb']['uri']
+database_name = st.secrets['mongodb']['database']
+server_uri = st.secrets['server']['uri']
+api_key = st.secrets['APIKEY']['key']
+user_id = st.secrets['USERID']['id']
 
 
 # connect to mongo db
@@ -233,4 +241,53 @@ def calculate_wqi(ph, turbidity, conductivity, temperature):
     
     return wqi
 
+def copy_to_clipboard(text):
+    pyperclip.copy(text)
+# get latest 10 rows of forcasted data
+async def get_latest_forcasted_data(deviceId):
+    try:
+        response = await requests.get(f"{server_uri}/forcast/{deviceId}/all")
+        data = response.json()
+        return data
+    except JSONDecodeError:
+        print("Empty response received from the server")
+        return {}
+
+# get latest line of forcasted data
+
+def get_last_forcasted_data(deviceId):
+    try:
+        response = requests.get(f"{server_uri}/forcast/{deviceId}")
+        data = response.json()
+        return data
+    except JSONDecodeError :
+        print("Empty response received from the server")
+        return {}
     
+def forcast_next_day(deviceId,data):
+    try:
+        response = requests.post(f"{server_uri}/forcast/{deviceId}",json=data)
+        data = response.json()
+        return data
+    except JSONDecodeError :
+        print("Empty response received from the server")
+        return {} 
+    
+def generate_random_lat_long(min_lat, max_lat, min_long, max_long):
+    latitude = random.uniform(min_lat, max_lat)
+    longitude = random.uniform(min_long, max_long)
+    return latitude, longitude
+
+def water_quality_message(wqi):
+    if wqi >= 0 and wqi < 25:
+        return "The water quality is really low. Not suitable for consumption or engaging in leisure activities due to potential hazards."
+    elif wqi >= 25 and wqi < 50:
+        return "Poor water quality. Limited use for drinking and recreational activities."
+    elif wqi >= 50 and wqi < 75:
+        return "The water quality is acceptable. All fine for a few leisure pursuits but not drinking."
+    elif wqi >= 75 and wqi < 90:
+        return "Good water condition. Generally safe for drinking and leisure activities."
+    elif wqi >= 90 and wqi <= 100:
+        return "Excellent water quality. Extremely secure for recreational and drinking purposes."
+    else:
+        return "Invalid water quality index. Please provide a value between 0 and 100."

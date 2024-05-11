@@ -31,17 +31,11 @@ elif st.session_state.authenticated == True:
                 unsafe_allow_html=True
             )
         st.title("Devices")
+        st.markdown("<span style='height: 20px;'></span>", unsafe_allow_html=True)
         # Columns
         num_columns = 3
         columns = st.columns(num_columns)
         # Data
-        # devices = [
-        #     {'Name': 'Device 1', 'Location': 'blida', 'Status': 'Active','Longitude': 36.531513, 'Latitude': 2.967012},
-        #     {'Name': 'Device 2', 'Location': 'alger', 'Status': 'Inactive','Longitude': 36.752887, 'Latitude': 3.042048},
-        #     {'Name': 'Device 3', 'Location': 'oran', 'Status': 'Active','Longitude': 35.691111, 'Latitude': -0.641667},
-        #     {'Name': 'Device 4', 'Location': 'constantine', 'Status': 'Active','Longitude': 36.365, 'Latitude': 6.614722},
-        #     {'Name': 'Device 5', 'Location': 'annaba', 'Status': 'Inactive','Longitude': 36.9, 'Latitude': 7.767}
-        # ]
         devices = get_devices()
         i = -1
         if len(devices) > 0:
