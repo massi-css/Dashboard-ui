@@ -60,9 +60,8 @@ def deviceDashboard(deviceId):
         st.markdown("<hr/>", unsafe_allow_html=True)
         st.subheader("water parameters:")
         st.markdown("<hr/>", unsafe_allow_html=True)
-        col1,col2,col3,col4= st.columns(4)
+        col1,col3,col4= st.columns(3)
         placeholder9 = col1.empty()
-        placeholder4 = col2.empty()
         placeholder3 = col3.empty()
         placeholder5 = col4.empty()
         # data analytics
@@ -123,12 +122,11 @@ def deviceDashboard(deviceId):
         with chartwaterqualityPlaceholder:
             bar_chart_with_threshold(df[["qualityIndex","createdAt"]],'createdAt','qualityIndex',40,"be careful !")
         with messageQuality:
-            st.write("water quality comment here")
+            message = water_quality_message(df['qualityIndex'].iloc[0])
+            st.write(message)
         # parameters indicators
         with placeholder3:
             plot_gauge(df['temperature'].iloc[0],"blue", "°C","Temperature", 45)
-        with placeholder4:
-            plot_gauge(df['conductivity'].iloc[0],"green", "µS/cm","Conductivity", 100)
         with placeholder5:
             plot_gauge(df['turbidity'].iloc[0],"red", "NTU","Turbidity", 50)
         with placeholder9:

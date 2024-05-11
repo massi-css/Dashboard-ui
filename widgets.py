@@ -146,7 +146,7 @@ def area_chart(df, x, y, title, threshold=None):
 def bar_chart_with_threshold(source,x,y,threshold=None,label="danger"):
     
 
-    bars = alt.Chart(source).mark_bar(color="#00CC96").encode(
+    bars = alt.Chart(source).mark_bar(color="#e45755").encode(
         x=f"{x}:O",
         y=f"{y}:Q",
     ).properties(
@@ -154,7 +154,7 @@ def bar_chart_with_threshold(source,x,y,threshold=None,label="danger"):
     )
 
     if threshold is not None:
-        highlight = bars.mark_bar(color="#e45755").encode(
+        highlight = bars.mark_bar(color="#00CC96").encode(
         y2=alt.Y2(datum=threshold)
         ).transform_filter(
         alt.datum[y] > threshold

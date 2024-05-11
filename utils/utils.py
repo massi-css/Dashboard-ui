@@ -271,3 +271,17 @@ def generate_random_lat_long(min_lat, max_lat, min_long, max_long):
     latitude = random.uniform(min_lat, max_lat)
     longitude = random.uniform(min_long, max_long)
     return latitude, longitude
+
+def water_quality_message(wqi):
+    if wqi >= 0 and wqi < 25:
+        return "The water quality is really low. Not suitable for consumption or engaging in leisure activities due to potential hazards."
+    elif wqi >= 25 and wqi < 50:
+        return "Poor water quality. Limited use for drinking and recreational activities."
+    elif wqi >= 50 and wqi < 75:
+        return "The water quality is acceptable. All fine for a few leisure pursuits but not drinking."
+    elif wqi >= 75 and wqi < 90:
+        return "Good water condition. Generally safe for drinking and leisure activities."
+    elif wqi >= 90 and wqi <= 100:
+        return "Excellent water quality. Extremely secure for recreational and drinking purposes."
+    else:
+        return "Invalid water quality index. Please provide a value between 0 and 100."
