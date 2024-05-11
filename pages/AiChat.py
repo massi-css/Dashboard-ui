@@ -32,7 +32,7 @@ os.environ["PANDASAI_API_KEY"] = api_key
 
 #initialize the authentication status
 if 'authenticated' not in st.session_state:
-    st.session_state.authenticated = get_authentication_status()
+    st.session_state.authenticated = False
 
 if st.session_state.authenticated == False:
     st.switch_page("pages/login_page.py")
