@@ -1,8 +1,8 @@
 import random
 from pymongo import MongoClient 
 import streamlit as st
-import yaml 
-from yaml.loader import SafeLoader
+# import yaml 
+# from yaml.loader import SafeLoader
 import requests
 from json import JSONDecodeError
 import pyperclip
