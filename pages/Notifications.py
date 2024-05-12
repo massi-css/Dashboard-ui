@@ -6,12 +6,12 @@ from widgets import sidebar
 st.set_page_config(page_title="IOT Dashboard", layout="wide",initial_sidebar_state='expanded')
 
 #initialize the authentication status
-if 'authenticated' not in st.session_state:
-    st.session_state.authenticated = False
+if 'authenticated' not in os.environ:
+    os.environ['authenticated'] = 'False'
 
-if st.session_state.authenticated == False:
+if os.environ['authenticated'] == 'False':
     st.switch_page("pages/login_page.py")
-elif st.session_state.authenticated == True:
+elif os.environ['authenticated'] == 'True':
     # the sidebar
     sidebar()
     with open("notifications.css") as f:

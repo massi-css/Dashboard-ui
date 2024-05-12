@@ -6,12 +6,12 @@ from widgets import sidebar
 st.set_page_config(page_title="IOT Dashboard", layout="centered",initial_sidebar_state='expanded')
 
 #initialize the authentication status
-if 'authenticated' not in st.session_state:
-    st.session_state.authenticated = False
+if 'authenticated' not in os.environ:
+    os.environ['authenticated'] = 'False'
 
-if st.session_state.authenticated == False:
+if os.environ['authenticated'] == 'False':
     st.switch_page("pages/login_page.py")
-elif st.session_state.authenticated == True:
+elif os.environ['authenticated'] == 'True':
     # the sidebar
     sidebar()
     latitude, longitude = generate_random_lat_long(max_lat=36.605496,min_lat=36.464257,max_long=3.022199,min_long=2.767970)
