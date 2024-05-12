@@ -6,6 +6,8 @@ import streamlit as st
 import requests
 from json import JSONDecodeError
 import pyperclip
+from dotenv import load_dotenv
+import os
 
 
 
@@ -16,17 +18,27 @@ import pyperclip
 #     config = yaml.load(file, Loader=SafeLoader)
 
 # retieve the uri, database name from the config file
+
+# localhost :
 # uri = config['mongodb']['uri']
 # database_name = config['mongodb']['database']
 # server_uri = config['server']['uri']
 # api_key = config['APIKEY']['key']
 # user_id = config['USERID']['id']
-uri = st.secrets['mongodb']['uri']
-database_name = st.secrets['mongodb']['database']
-server_uri = st.secrets['server']['uri']
-api_key = st.secrets['APIKEY']['key']
-user_id = st.secrets['USERID']['id']
 
+# streamlit cloud :
+# uri = st.secrets['mongodb']['uri']
+# database_name = st.secrets['mongodb']['database']
+# server_uri = st.secrets['server']['uri']
+# api_key = st.secrets['APIKEY']['key']
+# user_id = st.secrets['USERID']['id']
+
+# render :
+uri = os.getenv('mongodb_uri')
+database_name = os.getenv('database')
+server_uri = os.getenv('server_uri')
+api_key = os.getenv('APIKEY')
+user_id = os.getenv('USERID')
 
 # connect to mongo db
 def connect_to_db(uri, database_name, collection_name):
