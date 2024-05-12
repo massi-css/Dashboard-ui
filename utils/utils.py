@@ -162,7 +162,7 @@ def get_latest_device_data(device_id):
 # reset device data
 def reset_device_data(device_id):
     try:
-        response = requests.delete(f"{server_uri}/devices/data/{device_id}")
+        response = requests.delete(f"{server_uri}/data/{device_id}")
         data = response.json()
         return data
     except JSONDecodeError:
