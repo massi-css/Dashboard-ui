@@ -29,9 +29,10 @@ def deviceDashboard(deviceId):
             st.session_state["device_num"] = -1
             st.rerun()
     with headcol4:
-        if st.button("copy ID to clipboard"):
-            copy_to_clipboard(deviceId)
-            st.session_state["copy"] = True
+        if st.button("reset device"):
+            reset_device_data(deviceId)
+            # copy_to_clipboard(deviceId)
+            # st.session_state["copy"] = True
     with headcol3:
         if st.session_state['copy']:
             st.success("id copied to clipboard !")

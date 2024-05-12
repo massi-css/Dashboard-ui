@@ -31,12 +31,12 @@ os.environ["PANDASAI_API_KEY"] = api_key
 
 
 #initialize the authentication status
-if 'authenticated' not in st.session_state:
-    st.session_state.authenticated = True
+if 'authenticated' not in os.environ:
+    os.environ['authenticated'] = 'False'
 
-if st.session_state.authenticated == False:
+if os.environ['authenticated'] == 'False':
     st.switch_page("pages/login_page.py")
-elif st.session_state.authenticated == True:
+elif os.environ['authenticated'] == 'True':
     # initialize the messages state
     if 'messages' not in st.session_state:
         st.session_state.messages = []

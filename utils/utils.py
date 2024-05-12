@@ -18,22 +18,14 @@ import os
 #     config = yaml.load(file, Loader=SafeLoader)
 
 # retieve the uri, database name from the config file
-
-# localhost :
 # uri = config['mongodb']['uri']
 # database_name = config['mongodb']['database']
 # server_uri = config['server']['uri']
 # api_key = config['APIKEY']['key']
 # user_id = config['USERID']['id']
 
-# streamlit cloud :
-# uri = st.secrets['mongodb']['uri']
-# database_name = st.secrets['mongodb']['database']
-# server_uri = st.secrets['server']['uri']
-# api_key = st.secrets['APIKEY']['key']
-# user_id = st.secrets['USERID']['id']
-
-# render :
+# onrender :
+load_dotenv()
 uri = os.getenv('mongodb_uri')
 database_name = os.getenv('database')
 server_uri = os.getenv('server_uri')
@@ -60,7 +52,6 @@ def set_authentication_status(status):
 
 # create a user
 def create_user(collection, username, password, email, name):
-    # hashed_password = stauth.Hasher([password]).generate()
     user = {
         'username': username,
         'password': password,
@@ -77,7 +68,6 @@ def create_user(collection, username, password, email, name):
 
 # authenticate user
 def authenticate_user(collection, username, password):
-    # hashed_password = stauth.Hasher([password]).generate()
     user = collection.find_one({"username": username, "password":password})
     if user:
         return True
@@ -85,7 +75,8 @@ def authenticate_user(collection, username, password):
         return False
 
 def logout():
-    st.session_state.authenticated = set_authentication_status(False)
+    # st.session_state.authenticated = False
+    os.environ['authenticated'] = 'False'
     st.rerun()
 
 # get all devices
