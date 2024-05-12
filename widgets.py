@@ -147,7 +147,7 @@ def bar_chart_with_threshold(source,x,y,threshold=None,label="danger"):
     
 
     bars = alt.Chart(source).mark_bar(color="#e45755").encode(
-        x=alt.X(f"{x}:O", sort='descending'),
+        x=alt.X(f"{x}:O", sort='ascending'),
         y=f"{y}:Q",
     ).properties(
         width=500
