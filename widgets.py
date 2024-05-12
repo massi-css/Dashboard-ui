@@ -90,7 +90,7 @@ def line_chart(df, x, y_columns, title):
     df_long = df.melt(id_vars=x, value_vars=y_columns, var_name='column', value_name='value')
 
     chart = alt.Chart(df_long).mark_line().encode(
-        alt.X(x,sort="descending"),
+        alt.X(x,sort="ascending"),
         alt.Y('value:Q'),
         color='column:N'  # Use the 'column' column for the color encoding
     ).properties(
@@ -109,10 +109,10 @@ def scatter_chart(df, x, y, title):
     tooltip=['Name:N']
 ).properties(
     title=title,
-    width=500
+    # width=500
 )
 
-    st.altair_chart(chart)
+    st.altair_chart(chart, use_container_width=True)
 
 def area_chart(df, x, y, title, threshold=None):
     chart = alt.Chart(df).mark_area(
@@ -147,10 +147,10 @@ def bar_chart_with_threshold(source,x,y,threshold=None,label="danger"):
     
 
     bars = alt.Chart(source).mark_bar(color="#e45755").encode(
-        x=alt.X(f"{x}:O", sort='descending'),
+        x=alt.X(f"{x}:O", sort='ascending'),
         y=f"{y}:Q",
     ).properties(
-        width=500
+        # width=500
     )
 
     if threshold is not None:
@@ -173,9 +173,9 @@ def bar_chart_with_threshold(source,x,y,threshold=None,label="danger"):
             color="#FFFFFF"
         )
 
-        st.altair_chart(bars + highlight + rule + label)
+        st.altair_chart(bars + highlight + rule + label,use_container_width=True)
     else:
-        st.altair_chart(bars)
+        st.altair_chart(bars,use_container_width=True)
 
 def horizontal_bars_chart(df, x, y):
     chart = alt.Chart(df).mark_bar().encode(
@@ -183,6 +183,6 @@ def horizontal_bars_chart(df, x, y):
         alt.Y(x)
     ).properties(
         height=320,
-        width=500
+        # width=500
     )
-    st.altair_chart(chart)
+    st.altair_chart(chart, use_container_width=True)

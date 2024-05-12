@@ -92,7 +92,7 @@ def deviceDashboard(deviceId):
             "temperature": datatoforcast['temperature'],
             "turbidity": datatoforcast['turbidity'],
         }
-        forcast_next_day(deviceId=deviceId, data=datatoforcastformated)
+        # forcast_next_day(deviceId=deviceId, data=datatoforcastformated)
 
     while True:
         latest_data = get_latest_device_data(deviceId)
