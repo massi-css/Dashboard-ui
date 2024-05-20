@@ -18,7 +18,7 @@ elif os.environ['authenticated'] == 'True':
     # back button 
     if st.button("Back"):
         st.switch_page("pages/Devices.py")
-    st.info("please make sure to turn on your device and connect it to the same wifi before adding it to the system. \n device can be configured via next link : [configure device](http://192.168.4.1)")
+    st.warning("\U000026A0  please make sure to turn ON your device and connect it to the same wifi before adding it to the system. \n device can be configured via next link : [configure device](http://192.168.4.1)")
     with st.form(key='ad_device_form'):
         st.title("Add a new device")
         device_name = st.text_input("Device name")

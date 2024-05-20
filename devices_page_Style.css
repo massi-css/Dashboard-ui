@@ -143,7 +143,3 @@ div.st-emotion-cache-ocqkz7.e1f1d6gn5
     min-width: unset !important;
   }
 }
-
-button[data-testid="baseButton-secondary"]:hover{
-  border-color: red !important;
-}
